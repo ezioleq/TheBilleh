@@ -1,0 +1,32 @@
+name:  Publish game on github pages
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+      - uses: actions/checkout@v2
+
+      - name: Prepare
+        run: |
+          mkdir build
+          cp -r img build/
+          cp -r css build/
+          cp -r js build/
+          cp index.html build/
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: pages
+          FOLDER: build
+          CLEAN: true
+          SINGLE_COMMIT: true
