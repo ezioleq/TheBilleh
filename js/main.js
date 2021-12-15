@@ -3,6 +3,19 @@ class Vector2 {
 		this.x = x;
 		this.y = y;
 	}
+
+	magnitude() {
+		return Math.sqrt(
+			Math.pow(this.x, 2) + Math.pow(this.y, 2)
+		);
+	}
+
+	normalize() {
+		return new Vector2(
+			this.x / this.magnitude(),
+			this.y / this.magnitude()
+		);
+	}
 }
 
 class Rect {
@@ -98,7 +111,6 @@ window.addEventListener("DOMContentLoaded", () => {
 	
 	// init
 	var player = new Player(1280/2-50, 720/2-50);
-	console.log(player);
 
 	var keyboard = new Object();
 	let bullets = [];
@@ -115,23 +127,24 @@ window.addEventListener("DOMContentLoaded", () => {
 	setInterval(() => {
 		// update
 		(() => {
+			let moveDir = new Vector2(0, 0);
 			if (keyboard['w']) {
-				player.acc.y -= player.moveSpeed;
+				moveDir.y = -1;
 				player.dir = Up;
 			}
 			
 			if (keyboard['s']) {
-				player.acc.y += player.moveSpeed;
+				moveDir.y = 1;
 				player.dir = Down;
 			}
 			
 			if (keyboard['a']) {
-				player.acc.x -= player.moveSpeed;
+				moveDir.x = -1;
 				player.dir = Left;
 			}
 			
 			if (keyboard['d']) {
-				player.acc.x += player.moveSpeed;
+				moveDir.x = 1;
 				player.dir = Right;
 			}
 
@@ -167,6 +180,14 @@ window.addEventListener("DOMContentLoaded", () => {
 				));
 			}
 
+			if (moveDir.magnitude() > 1) {
+				moveDir.x = moveDir.normalize().x;
+				moveDir.y = moveDir.normalize().y;
+			}
+
+			player.acc.x += moveDir.x * player.moveSpeed;
+			player.acc.y += moveDir.y * player.moveSpeed;
+
 			player.vel.x += player.acc.x;
 			player.vel.y += player.acc.y;
 			player.acc = {x: 0, y: 0};
@@ -200,6 +221,7 @@ window.addEventListener("DOMContentLoaded", () => {
 			ctx.fillText(`Speed: ${player.moveSpeed}\n`, 10, 230);
 			ctx.fillText(`Dir: ${player.dir.toString()}\n`, 10, 260);
 			ctx.fillText(`Bullets: ${bullets.length}\n`, 10, 290);
+			ctx.fillText(`Vel mag: ${Math.round(player.vel.magnitude() * 100)/100}`, 10, 320);
 		})();
 	}, 16);
 });
