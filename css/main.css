@@ -1,0 +1,19 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	background-color: black;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#canvas {
+	width: 100%;
+}
