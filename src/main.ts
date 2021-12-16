@@ -1,5 +1,8 @@
 class Vector2 {
-	constructor(x, y) {
+	x: number;
+	y: number;
+
+	constructor(x: number, y: number) {
 		this.x = x;
 		this.y = y;
 	}
@@ -19,7 +22,12 @@ class Vector2 {
 }
 
 class Rect {
-	constructor(x, y, w, h) {
+	x: number;
+	y: number;
+	w: number;
+	h: number;
+
+	constructor(x: number, y: number, w: number, h: number) {
 		this.x = x;
 		this.y = y;
 		this.w = w;
@@ -28,7 +36,10 @@ class Rect {
 }
 
 class Transform {
-	constructor(x, y, w, h) {
+	position: Vector2;
+	scale: Vector2;
+
+	constructor(x: number, y: number, w: number, h: number) {
 		this.position = new Vector2(x, y);
 		this.scale = new Vector2(w, h);
 	}
@@ -40,13 +51,20 @@ const Left = Symbol("left");
 const Right = Symbol("right");
 
 class Bullet {
-	constructor(x, y, dir) {
+	transform: Transform;
+	vel: Vector2;
+	dir: Symbol;
+	speed: number;
+	texture: HTMLImageElement;
+	ttl: number;
+
+	constructor(x: number, y: number, dir: Symbol) {
 		this.transform = new Transform(x, y, 50, 50);
 		this.vel = new Vector2(0, 0);
 		this.dir = dir;
 		this.speed = 10;
 		this.texture = new Image();
-		this.texture.src = "img/b.png";
+		this.texture.src = "assets/img/b.png";
 		this.ttl = 6;
 
 		switch (dir) {
@@ -71,7 +89,7 @@ class Bullet {
 		this.ttl -= 0.016;
 	}
 
-	draw(ctx) {
+	draw(ctx: CanvasRenderingContext2D) {
 		ctx.drawImage(
 			this.texture,
 			this.transform.position.x,
@@ -83,17 +101,24 @@ class Bullet {
 }
 
 class Player {
-	constructor(x, y) {
+	transform: Transform;
+	vel: Vector2;
+	acc: Vector2;
+	texture: HTMLImageElement;
+	moveSpeed: number;
+	dir: Symbol;
+
+	constructor(x: number, y: number) {
 		this.transform = new Transform(x, y, 100, 100);
 		this.vel = new Vector2(0, 0);
 		this.acc = new Vector2(0, 0);
 		this.texture = new Image();
-		this.texture.src = "img/p.png";
+		this.texture.src = "assets/img/p.png";
 		this.moveSpeed = 1;
 		this.dir = Up;
 	}
 
-	draw(ctx) {
+	draw(ctx: CanvasRenderingContext2D) {
 		ctx.drawImage(
 			this.texture,
 			this.transform.position.x,
@@ -105,15 +130,14 @@ class Player {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-	var canvas = document.getElementById("canvas");
-	/** @type {CanvasRenderingContext2D} */
-	var ctx = canvas.getContext('2d');
+	var canvas: any = document.getElementById("canvas");
+	var ctx: CanvasRenderingContext2D = canvas.getContext('2d');
 	
 	// init
 	var player = new Player(1280/2-50, 720/2-50);
 
-	var keyboard = new Object();
-	let bullets = [];
+	var keyboard: {[k: string]: any} = {};
+	let bullets: Bullet[] = [];
 
 	window.addEventListener('keydown', (e) => {
 		keyboard[e.key.toLowerCase()] = true;
@@ -190,7 +214,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 			player.vel.x += player.acc.x;
 			player.vel.y += player.acc.y;
-			player.acc = {x: 0, y: 0};
+			player.acc = new Vector2(0, 0);
 
 			player.transform.position.x += player.vel.x;
 			player.transform.position.y += player.vel.y;
