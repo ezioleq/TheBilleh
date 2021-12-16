@@ -1,25 +1,35 @@
-name:  Publish game on github pages
+name: Publish game on github pages
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, ts ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, ts ]
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Prepare
+      - name: Setup Node.js ${{ matrix.node-version }} environment
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Build
         run: |
+          npm install
+          npm run build:prod
           mkdir build
-          cp -r img build/
-          cp -r css build/
-          cp -r js build/
+          cp -r dist build/
+          cp -r assets build/
           cp index.html build/
 
       - name: Deploy
