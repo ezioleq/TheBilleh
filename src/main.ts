@@ -1,49 +1,6 @@
-class Vector2 {
-	x: number;
-	y: number;
-
-	constructor(x: number, y: number) {
-		this.x = x;
-		this.y = y;
-	}
-
-	magnitude() {
-		return Math.sqrt(
-			Math.pow(this.x, 2) + Math.pow(this.y, 2)
-		);
-	}
-
-	normalize() {
-		return new Vector2(
-			this.x / this.magnitude(),
-			this.y / this.magnitude()
-		);
-	}
-}
-
-class Rect {
-	x: number;
-	y: number;
-	w: number;
-	h: number;
-
-	constructor(x: number, y: number, w: number, h: number) {
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
-	}
-}
-
-class Transform {
-	position: Vector2;
-	scale: Vector2;
-
-	constructor(x: number, y: number, w: number, h: number) {
-		this.position = new Vector2(x, y);
-		this.scale = new Vector2(w, h);
-	}
-}
+import { Vector2 } from "./math/vector";
+import { Rect } from "./math/rect";
+import { Transform } from "./components/transform";
 
 const Up = Symbol("up");
 const Down = Symbol("down");
@@ -233,6 +190,7 @@ window.addEventListener("DOMContentLoaded", () => {
 			// clear
 			ctx.fillStyle = "rgb(255, 255, 255)";
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
+			ctx.fillStyle = "rgb(0, 0, 0)";
 
 			player.draw(ctx);
 
@@ -240,7 +198,6 @@ window.addEventListener("DOMContentLoaded", () => {
 				e.draw(ctx);
 			});
 
-			ctx.fillStyle = "rgb(0, 0, 0)";
 			ctx.font = "30px Roboto"
 			ctx.fillText(`Speed: ${player.moveSpeed}\n`, 10, 230);
 			ctx.fillText(`Dir: ${player.dir.toString()}\n`, 10, 260);
