@@ -1,61 +1,7 @@
 import { Vector2 } from "./math/vector";
-import { Rect } from "./math/rect";
+import { Direction } from "./components/direction";
 import { Transform } from "./components/transform";
-
-const Up = Symbol("up");
-const Down = Symbol("down");
-const Left = Symbol("left");
-const Right = Symbol("right");
-
-class Bullet {
-	transform: Transform;
-	vel: Vector2;
-	dir: Symbol;
-	speed: number;
-	texture: HTMLImageElement;
-	ttl: number;
-
-	constructor(x: number, y: number, dir: Symbol) {
-		this.transform = new Transform(x, y, 50, 50);
-		this.vel = new Vector2(0, 0);
-		this.dir = dir;
-		this.speed = 10;
-		this.texture = new Image();
-		this.texture.src = "assets/img/b.png";
-		this.ttl = 6;
-
-		switch (dir) {
-			case Up:
-				this.vel.y -= this.speed;
-				break;
-			case Down:
-				this.vel.y += this.speed;
-				break;
-			case Left:
-				this.vel.x -= this.speed;
-				break;
-			case Right:
-				this.vel.x += this.speed;
-				break;
-		}
-	}
-
-	update() {
-		this.transform.position.x += this.vel.x;
-		this.transform.position.y += this.vel.y;
-		this.ttl -= 0.016;
-	}
-
-	draw(ctx: CanvasRenderingContext2D) {
-		ctx.drawImage(
-			this.texture,
-			this.transform.position.x,
-			this.transform.position.y,
-			this.transform.size.x,
-			this.transform.size.y
-		);
-	}
-}
+import { Bullet } from "./entities/bullet";
 
 class Player {
 	transform: Transform;
@@ -63,7 +9,7 @@ class Player {
 	acc: Vector2;
 	texture: HTMLImageElement;
 	moveSpeed: number;
-	dir: Symbol;
+	dir: Direction;
 
 	constructor(x: number, y: number) {
 		this.transform = new Transform(x, y, 100, 100);
@@ -72,7 +18,7 @@ class Player {
 		this.texture = new Image();
 		this.texture.src = "assets/img/p.png";
 		this.moveSpeed = 1;
-		this.dir = Up;
+		this.dir = Direction.Up;
 	}
 
 	draw(ctx: CanvasRenderingContext2D) {
@@ -89,7 +35,7 @@ class Player {
 window.addEventListener("DOMContentLoaded", () => {
 	var canvas: any = document.getElementById("canvas");
 	var ctx: CanvasRenderingContext2D = canvas.getContext('2d');
-	
+
 	// init
 	var player = new Player(1280/2-50, 720/2-50);
 
@@ -111,29 +57,29 @@ window.addEventListener("DOMContentLoaded", () => {
 			let moveDir = new Vector2(0, 0);
 			if (keyboard['w']) {
 				moveDir.y = -1;
-				player.dir = Up;
+				player.dir = Direction.Up;
 			}
 			
 			if (keyboard['s']) {
 				moveDir.y = 1;
-				player.dir = Down;
+				player.dir = Direction.Down;
 			}
 			
 			if (keyboard['a']) {
 				moveDir.x = -1;
-				player.dir = Left;
+				player.dir = Direction.Left;
 			}
 			
 			if (keyboard['d']) {
 				moveDir.x = 1;
-				player.dir = Right;
+				player.dir = Direction.Right;
 			}
 
 			if (keyboard['arrowleft']) {
 				bullets.push(new Bullet(
 					player.transform.position.x + player.transform.size.x/2 - 25,
 					player.transform.position.y + player.transform.size.y/2 - 25,
-					Left
+					Direction.Left
 				));
 			}
 
@@ -141,7 +87,7 @@ window.addEventListener("DOMContentLoaded", () => {
 				bullets.push(new Bullet(
 					player.transform.position.x + player.transform.size.x/2 - 25,
 					player.transform.position.y + player.transform.size.y/2 - 25,
-					Right
+					Direction.Right
 				));
 			}
 
@@ -149,7 +95,7 @@ window.addEventListener("DOMContentLoaded", () => {
 				bullets.push(new Bullet(
 					player.transform.position.x + player.transform.size.x/2 - 25,
 					player.transform.position.y + player.transform.size.y/2 - 25,
-					Up
+					Direction.Up
 				));
 			}
 
@@ -157,7 +103,7 @@ window.addEventListener("DOMContentLoaded", () => {
 				bullets.push(new Bullet(
 					player.transform.position.x + player.transform.size.x/2 - 25,
 					player.transform.position.y + player.transform.size.y/2 - 25,
-					Down
+					Direction.Down
 				));
 			}
 
