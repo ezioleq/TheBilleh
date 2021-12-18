@@ -2,12 +2,12 @@ export class Vector2 {
 	x: number;
 	y: number;
 
-	readonly zero: Vector2 = new Vector2(0, 0);
-	readonly one: Vector2 = new Vector2(1, 1);
-	readonly up: Vector2 = new Vector2(0, 1);
-	readonly down: Vector2 = new Vector2(0, -1);
-	readonly right: Vector2 = new Vector2(1, 0);
-	readonly left: Vector2 = new Vector2(-1, 0);
+	static readonly zero: Vector2 = new Vector2(0, 0);
+	static readonly one: Vector2 = new Vector2(1, 1);
+	static readonly up: Vector2 = new Vector2(0, 1);
+	static readonly down: Vector2 = new Vector2(0, -1);
+	static readonly right: Vector2 = new Vector2(1, 0);
+	static readonly left: Vector2 = new Vector2(-1, 0);
 
 	constructor(x: number, y: number) {
 		this.x = x;
