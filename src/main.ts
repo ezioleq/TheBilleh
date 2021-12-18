@@ -51,8 +51,8 @@ class Bullet {
 			this.texture,
 			this.transform.position.x,
 			this.transform.position.y,
-			this.transform.scale.x,
-			this.transform.scale.y
+			this.transform.size.x,
+			this.transform.size.y
 		);
 	}
 }
@@ -80,8 +80,8 @@ class Player {
 			this.texture,
 			this.transform.position.x,
 			this.transform.position.y,
-			this.transform.scale.x,
-			this.transform.scale.y
+			this.transform.size.x,
+			this.transform.size.y
 		);
 	}
 }
@@ -131,32 +131,32 @@ window.addEventListener("DOMContentLoaded", () => {
 
 			if (keyboard['arrowleft']) {
 				bullets.push(new Bullet(
-					player.transform.position.x + player.transform.scale.x/2 - 25,
-					player.transform.position.y + player.transform.scale.y/2 - 25,
+					player.transform.position.x + player.transform.size.x/2 - 25,
+					player.transform.position.y + player.transform.size.y/2 - 25,
 					Left
 				));
 			}
 
 			if (keyboard['arrowright']) {
 				bullets.push(new Bullet(
-					player.transform.position.x + player.transform.scale.x/2 - 25,
-					player.transform.position.y + player.transform.scale.y/2 - 25,
+					player.transform.position.x + player.transform.size.x/2 - 25,
+					player.transform.position.y + player.transform.size.y/2 - 25,
 					Right
 				));
 			}
 
 			if (keyboard['arrowup']) {
 				bullets.push(new Bullet(
-					player.transform.position.x + player.transform.scale.x/2 - 25,
-					player.transform.position.y + player.transform.scale.y/2 - 25,
+					player.transform.position.x + player.transform.size.x/2 - 25,
+					player.transform.position.y + player.transform.size.y/2 - 25,
 					Up
 				));
 			}
 
 			if (keyboard['arrowdown']) {
 				bullets.push(new Bullet(
-					player.transform.position.x + player.transform.scale.x/2 - 25,
-					player.transform.position.y + player.transform.scale.y/2 - 25,
+					player.transform.position.x + player.transform.size.x/2 - 25,
+					player.transform.position.y + player.transform.size.y/2 - 25,
 					Down
 				));
 			}
