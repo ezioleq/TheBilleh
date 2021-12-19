@@ -4,7 +4,6 @@ import { Player } from "./entities/player";
 var canvas: any;
 var ctx: CanvasRenderingContext2D;
 
-var keyboard: { [k: string]: any } = {};
 var player: Player;
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -14,20 +13,12 @@ window.addEventListener("DOMContentLoaded", () => {
 	// init
 	player = new Player(1280 / 2 - 50, 720 / 2 - 50);
 
-	window.addEventListener('keydown', (e) => {
-		keyboard[e.key.toLowerCase()] = true;
-	});
-
-	window.addEventListener('keyup', (e) => {
-		keyboard[e.key.toLowerCase()] = false;
-	});
-
 	window.requestAnimationFrame(update);
 });
 
 let update = () => {
 	// update
-	player.update(keyboard);
+	player.update();
 
 	// draw
 	ctx.fillStyle = "rgb(255, 255, 255)";

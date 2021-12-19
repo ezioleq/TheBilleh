@@ -2,6 +2,7 @@ import { Vector2 } from "../math/vector";
 import { Direction } from "../components/direction";
 import { Transform } from "../components/transform";
 import { Bullet } from "../entities/bullet";
+import { Input } from "../input";
 
 export class Player {
 	transform: Transform;
@@ -22,29 +23,29 @@ export class Player {
 		this.dir = Direction.Up;
 	}
 
-	update(keyboard: { [k: string]: any }) {
+	update() {
 		let moveDir = new Vector2(0, 0);
-		if (keyboard['w']) {
+		if (Input.pressed('w')) {
 			moveDir.y = -1;
 			this.dir = Direction.Up;
 		}
 
-		if (keyboard['s']) {
+		if (Input.pressed('s')) {
 			moveDir.y = 1;
 			this.dir = Direction.Down;
 		}
 
-		if (keyboard['a']) {
+		if (Input.pressed('a')) {
 			moveDir.x = -1;
 			this.dir = Direction.Left;
 		}
 
-		if (keyboard['d']) {
+		if (Input.pressed('d')) {
 			moveDir.x = 1;
 			this.dir = Direction.Right;
 		}
 
-		if (keyboard['arrowleft']) {
+		if (Input.pressed('arrowleft')) {
 			this.bullets.push(new Bullet(
 				this.transform.position.x + this.transform.size.x / 2 - 25,
 				this.transform.position.y + this.transform.size.y / 2 - 25,
@@ -52,7 +53,7 @@ export class Player {
 			));
 		}
 
-		if (keyboard['arrowright']) {
+		if (Input.pressed('arrowright')) {
 			this.bullets.push(new Bullet(
 				this.transform.position.x + this.transform.size.x / 2 - 25,
 				this.transform.position.y + this.transform.size.y / 2 - 25,
@@ -60,7 +61,7 @@ export class Player {
 			));
 		}
 
-		if (keyboard['arrowup']) {
+		if (Input.pressed('arrowup')) {
 			this.bullets.push(new Bullet(
 				this.transform.position.x + this.transform.size.x / 2 - 25,
 				this.transform.position.y + this.transform.size.y / 2 - 25,
@@ -68,7 +69,7 @@ export class Player {
 			));
 		}
 
-		if (keyboard['arrowdown']) {
+		if (Input.pressed('arrowdown')) {
 			this.bullets.push(new Bullet(
 				this.transform.position.x + this.transform.size.x / 2 - 25,
 				this.transform.position.y + this.transform.size.y / 2 - 25,
