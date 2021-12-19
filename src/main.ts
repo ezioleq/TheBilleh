@@ -6,14 +6,36 @@ var ctx: CanvasRenderingContext2D;
 
 var player: Player;
 
+let gameWidth = 1280;
+let gameHeight = 720;
+
 window.addEventListener("DOMContentLoaded", () => {
 	canvas = document.getElementById("canvas");
 	ctx = canvas.getContext('2d');
+
+	canvas.width = gameWidth;
+	canvas.height = gameHeight;
 
 	// init
 	player = new Player(1280 / 2 - 50, 720 / 2 - 50);
 
 	window.requestAnimationFrame(update);
+	window.dispatchEvent(new Event("resize"));
+});
+
+window.addEventListener("resize", () => {
+	let screenWidth = window.innerWidth;
+	let screenHeight = window.innerHeight;
+
+	let horizontal: boolean = (screenWidth / screenHeight) > (gameWidth / gameHeight);
+
+	if (horizontal) {
+		canvas.style.height = "100vh";
+		canvas.style.removeProperty("width");
+	} else {
+		canvas.style.width = "100vw";
+		canvas.style.removeProperty("height");
+	}
 });
 
 let update = () => {
@@ -22,7 +44,7 @@ let update = () => {
 
 	// draw
 	ctx.fillStyle = "rgb(255, 255, 255)";
-	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	ctx.fillRect(0, 0, gameWidth, gameHeight);
 	ctx.fillStyle = "rgb(0, 0, 0)";
 
 	player.draw(ctx);
