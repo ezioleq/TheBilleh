@@ -16,7 +16,6 @@ export class InputManager {
 		return this._instance || (this._instance = new this());
 	}
 
-	
 	public pressed(key: string): boolean {
 		return this.keys[key];
 	}	
