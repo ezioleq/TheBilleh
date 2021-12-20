@@ -19,12 +19,26 @@ export class Game {
 		this.canvas.width = this.gameWidth;
 		this.canvas.height = this.gameHeight;
 
+		// Handle window resizes
+		window.addEventListener("resize", () => {
+			let screenWidth = window.innerWidth;
+			let screenHeight = window.innerHeight;
+
+			// Where should we put the black bars?
+			let horizontal: boolean = (screenWidth / screenHeight) > (this.gameWidth / this.gameHeight);
+
+			if (horizontal) {
+				this.canvas.style.height = "100vh";
+				this.canvas.style.removeProperty("width");
+			} else {
+				this.canvas.style.width = "100vw";
+				this.canvas.style.removeProperty("height");
+			}
+		});
+		window.dispatchEvent(new Event("resize"));
+
 		// Set the initial state
 		this.stateManager = new StateManager(new GameState());
-
-		// Handle window resizes
-		window.addEventListener("resize", this.handleResize);
-		window.dispatchEvent(new Event("resize"));
 
 		// Set our main loop
 		this.mainLoop = () => {
@@ -34,23 +48,6 @@ export class Game {
 
 		// Start the game loop by requesting a frame
 		window.requestAnimationFrame(this.mainLoop);
-	}
-
-	handleResize() {
-		let screenWidth = window.innerWidth;
-		let screenHeight = window.innerHeight;
-
-		// Where should we put the black bars?
-		let horizontal: boolean =
-			(screenWidth / screenHeight) > (this.gameWidth / this.gameHeight);
-
-		if (horizontal) {
-			this.canvas.style.height = "100vh";
-			this.canvas.style.removeProperty("width");
-		} else {
-			this.canvas.style.width = "100vw";
-			this.canvas.style.removeProperty("height");
-		}
 	}
 
 	update() {
