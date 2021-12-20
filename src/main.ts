@@ -1,13 +1,13 @@
-import { Vector2 } from "./math/vector";
-import { Player } from "./entities/player";
+import { StateManager } from "./states/stateManager";
+import { GameState } from "./states/gameState";
 
 var canvas: any;
 var ctx: CanvasRenderingContext2D;
 
-var player: Player;
-
 let gameWidth = 1280;
 let gameHeight = 720;
+
+let stateManager: StateManager = new StateManager();
 
 window.addEventListener("DOMContentLoaded", () => {
 	canvas = document.getElementById("canvas");
@@ -16,8 +16,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	canvas.width = gameWidth;
 	canvas.height = gameHeight;
 
-	// init
-	player = new Player(1280 / 2 - 50, 720 / 2 - 50);
+	stateManager.setState(new GameState());
 
 	window.requestAnimationFrame(update);
 	window.dispatchEvent(new Event("resize"));
@@ -40,20 +39,14 @@ window.addEventListener("resize", () => {
 
 let update = () => {
 	// update
-	player.update();
+	stateManager.getState().update();
 
 	// draw
 	ctx.fillStyle = "rgb(255, 255, 255)";
 	ctx.fillRect(0, 0, gameWidth, gameHeight);
 	ctx.fillStyle = "rgb(0, 0, 0)";
 
-	player.draw(ctx);
-
-	ctx.font = "30px Roboto"
-	ctx.fillText(`Speed: ${player.moveSpeed}\n`, 10, 230);
-	ctx.fillText(`Dir: ${player.dir.toString()}\n`, 10, 260);
-	ctx.fillText(`Bullets: ${player.bullets.length}\n`, 10, 290);
-	ctx.fillText(`Vel mag: ${Math.round(player.vel.magnitude() * 100) / 100}`, 10, 320);
+	stateManager.getState().draw(ctx, 1);
 
 	window.requestAnimationFrame(update);
 }
