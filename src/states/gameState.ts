@@ -12,7 +12,7 @@ export class GameState implements State {
 		this.player.update();
 	}
 
-	draw(ctx: CanvasRenderingContext2D, delta: number) {
+	draw(ctx: CanvasRenderingContext2D, step: number) {
 		this.player.draw(ctx);
 
 		ctx.font = "30px Roboto"
