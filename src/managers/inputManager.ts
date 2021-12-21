@@ -6,7 +6,7 @@ export class InputManager {
 		window.addEventListener('keydown', (e) => {
 			this.keys[e.key.toLowerCase()] = true;
 		});
-	
+
 		window.addEventListener('keyup', (e) => {
 			this.keys[e.key.toLowerCase()] = false;
 		});
@@ -18,7 +18,11 @@ export class InputManager {
 
 	public pressed(key: string): boolean {
 		return this.keys[key];
-	}	
+	}
+
+	public any(): boolean {
+		return Object.values(this.keys).some((e) => e === true);
+	}
 }
 
 export const Input = InputManager.Instance;
