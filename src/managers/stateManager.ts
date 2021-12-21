@@ -1,17 +1,17 @@
 import { State } from "../states/state";
 
 export class StateManager {
-	private _state: State;
+	private _currentState: State;
 
 	constructor(state?: State) {
-		this._state = state;
+		this._currentState = state;
 	}
 
-	public setState(state: State) {
-		this._state = state;
+	public get currentState() {
+		return this._currentState;
 	}
 
-	public getState() {
-		return this._state;
+	public set currentState(state: State) {
+		this._currentState = state;
 	}
 }

@@ -52,7 +52,7 @@ export class Game {
 
 	update() {
 		// Update current state
-		this.stateManager.getState().update();
+		this.stateManager.currentState.update();
 	}
 
 	draw() {
@@ -62,7 +62,7 @@ export class Game {
 		this.ctx.fillStyle = "rgb(0, 0, 0)";
 
 		// Draw current state
-		this.stateManager.getState().draw(this.ctx, 1);
+		this.stateManager.currentState.draw(this.ctx, 1);
 
 		// Request a new frame
 		window.requestAnimationFrame(this.mainLoop);
