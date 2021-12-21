@@ -2,7 +2,7 @@ import { Vector2 } from "../math/vector";
 import { Direction } from "../components/direction";
 import { Transform } from "../components/transform";
 import { Bullet } from "../entities/bullet";
-import { Input } from "../input";
+import { Input } from "../managers/inputManager";
 
 export class Player {
 	transform: Transform;

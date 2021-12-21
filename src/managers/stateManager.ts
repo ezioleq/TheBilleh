@@ -1,4 +1,4 @@
-import { State } from "./state";
+import { State } from "../states/state";
 
 export class StateManager {
 	private _state: State;

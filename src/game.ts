@@ -1,4 +1,4 @@
-import { StateManager } from "./states/stateManager";
+import { StateManager } from "./managers/stateManager";
 import { GameState } from "./states/gameState";
 
 export class Game {
