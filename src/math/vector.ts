@@ -1,3 +1,5 @@
+import { Mathf } from "./mathf";
+
 export class Vector2 {
 	x: number;
 	y: number;
@@ -57,6 +59,13 @@ export class Vector2 {
 		return this.x * b.x + this.y * b.y;
 	}
 
+	lerp(b: Vector2, t: number) {
+		return new Vector2(
+			Mathf.lerp(this.x, b.x, t),
+			Mathf.lerp(this.y, b.y, t)
+		);
+	}
+
 	// Untested, may explode
 	move_towards(target: Vector2, max_distance_delta: number): Vector2 {
 		let a: Vector2 = new Vector2(this.x - target.x, this.y - target.y);
@@ -64,7 +73,7 @@ export class Vector2 {
 
 		if (magnitude <= max_distance_delta || magnitude === 0)
 			return target;
-		
+
 		// Help
 		return new Vector2(this.x, this.y).add(
 			new Vector2(a.x / magnitude, a.y / magnitude)
