@@ -63,7 +63,7 @@ export class Game {
 		this.lastTickTime = newTickTime;
 		this.lagTime += deltaTime;
 
-		if (this.lagTime > this.timePerTick) {
+		while (this.lagTime >= this.timePerTick) {
 			// Update current state
 			this.stateManager.currentState.update(this.ticks);
 			this.lagTime -= this.timePerTick;
