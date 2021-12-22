@@ -6,6 +6,7 @@ import { Input } from "../managers/inputManager";
 
 export class Player {
 	transform: Transform;
+	previousPosition: Vector2;
 	vel: Vector2;
 	acc: Vector2;
 	texture: HTMLImageElement;
@@ -15,6 +16,8 @@ export class Player {
 
 	constructor(x: number, y: number) {
 		this.transform = new Transform(x, y, 100, 100);
+		this.previousPosition = new Vector2();
+		Object.assign(this.previousPosition, this.transform.position);
 		this.vel = new Vector2(0, 0);
 		this.acc = new Vector2(0, 0);
 		this.texture = new Image();
@@ -89,8 +92,10 @@ export class Player {
 		this.vel.y += this.acc.y;
 		this.acc = new Vector2(0, 0);
 
-		// this.transform.position.x += this.vel.x;
-		// this.transform.position.y += this.vel.y;
+		Object.assign(this.previousPosition, this.transform.position);
+		this.transform.position.x += this.vel.x;
+		this.transform.position.y += this.vel.y;
+
 		this.vel.x *= 0.91;
 		this.vel.y *= 0.91;
 
@@ -102,14 +107,12 @@ export class Player {
 	}
 
 	draw(ctx: CanvasRenderingContext2D, step: number) {
-		// console.log(step);
-		this.transform.position.x += this.vel.x * step;
-		this.transform.position.y += this.vel.y * step;
-		// this.transform.position.add(this.vel.mul(new Vector2(step, step)));
+		let position: Vector2 = this.previousPosition.lerp(this.transform.position, step);
+
 		ctx.drawImage(
 			this.texture,
-			this.transform.position.x,
-			this.transform.position.y,
+			position.x,
+			position.y,
 			this.transform.size.x,
 			this.transform.size.y
 		);
