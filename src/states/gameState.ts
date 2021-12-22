@@ -10,7 +10,6 @@ export class GameState implements State {
 
 	update() {
 		this.player.update();
-		console.log("tick " + Math.floor(new Date().getTime()/1000));
 	}
 
 	draw(ctx: CanvasRenderingContext2D, step: number) {
