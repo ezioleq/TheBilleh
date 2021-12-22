@@ -38,7 +38,7 @@ export class Bullet {
 		}
 	}
 
-	update() {
+	update(tick: number) {
 		Object.assign(this.previousPosition, this.transform.position);
 		this.transform.position.x += this.vel.x;
 		this.transform.position.y += this.vel.y;

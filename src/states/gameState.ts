@@ -8,8 +8,8 @@ export class GameState implements State {
 		this.player = new Player(1280 / 2 - 50, 720 / 2 - 50);
 	}
 
-	update() {
-		this.player.update();
+	update(tick: number) {
+		this.player.update(tick);
 	}
 
 	draw(ctx: CanvasRenderingContext2D, step: number) {

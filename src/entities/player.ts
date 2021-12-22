@@ -26,7 +26,7 @@ export class Player {
 		this.dir = Direction.Up;
 	}
 
-	update() {
+	update(tick: number) {
 		let moveDir = new Vector2(0, 0);
 		if (Input.pressed('w')) {
 			moveDir.y = -1;
@@ -100,7 +100,7 @@ export class Player {
 		this.vel.y *= 0.91;
 
 		this.bullets.forEach((e, i) => {
-			e.update();
+			e.update(tick);
 			if (e.ttl <= 0)
 				this.bullets.splice(i, 1);
 		});
