@@ -11,9 +11,9 @@ export class Vector2 {
 	static readonly right: Vector2 = new Vector2(1, 0);
 	static readonly left: Vector2 = new Vector2(-1, 0);
 
-	constructor(x: number, y: number) {
-		this.x = x;
-		this.y = y;
+	constructor(x?: number, y?: number) {
+		this.x = (x != undefined) ? x : 0;
+		this.y = (y != undefined) ? y : 0;
 	}
 
 	// There is no operator overloading section
