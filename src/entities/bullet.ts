@@ -4,6 +4,7 @@ import { Direction } from "../components/direction";
 
 export class Bullet {
 	transform: Transform;
+	previousPosition: Vector2;
 	vel: Vector2;
 	dir: Direction;
 	speed: number;
@@ -12,6 +13,8 @@ export class Bullet {
 
 	constructor(x: number, y: number, dir: Direction) {
 		this.transform = new Transform(x, y, 50, 50);
+		this.previousPosition = new Vector2();
+		Object.assign(this.previousPosition, this.transform.position);
 		this.vel = new Vector2(0, 0);
 		this.dir = dir;
 		this.speed = 10;
@@ -35,17 +38,20 @@ export class Bullet {
 		}
 	}
 
-	update() {
+	update(tick: number) {
+		Object.assign(this.previousPosition, this.transform.position);
 		this.transform.position.x += this.vel.x;
 		this.transform.position.y += this.vel.y;
 		this.ttl -= 0.016;
 	}
 
-	draw(ctx: CanvasRenderingContext2D) {
+	draw(ctx: CanvasRenderingContext2D, step: number) {
+		let position: Vector2 = this.previousPosition.lerp(this.transform.position, step);
+
 		ctx.drawImage(
 			this.texture,
-			this.transform.position.x,
-			this.transform.position.y,
+			position.x,
+			position.y,
 			this.transform.size.x,
 			this.transform.size.y
 		);

@@ -6,6 +6,7 @@ import { Input } from "../managers/inputManager";
 
 export class Player {
 	transform: Transform;
+	previousPosition: Vector2;
 	vel: Vector2;
 	acc: Vector2;
 	texture: HTMLImageElement;
@@ -15,6 +16,8 @@ export class Player {
 
 	constructor(x: number, y: number) {
 		this.transform = new Transform(x, y, 100, 100);
+		this.previousPosition = new Vector2();
+		Object.assign(this.previousPosition, this.transform.position);
 		this.vel = new Vector2(0, 0);
 		this.acc = new Vector2(0, 0);
 		this.texture = new Image();
@@ -23,7 +26,7 @@ export class Player {
 		this.dir = Direction.Up;
 	}
 
-	update() {
+	update(tick: number) {
 		let moveDir = new Vector2(0, 0);
 		if (Input.pressed('w')) {
 			moveDir.y = -1;
@@ -89,29 +92,33 @@ export class Player {
 		this.vel.y += this.acc.y;
 		this.acc = new Vector2(0, 0);
 
+		Object.assign(this.previousPosition, this.transform.position);
 		this.transform.position.x += this.vel.x;
 		this.transform.position.y += this.vel.y;
+
 		this.vel.x *= 0.91;
 		this.vel.y *= 0.91;
 
 		this.bullets.forEach((e, i) => {
-			e.update();
+			e.update(tick);
 			if (e.ttl <= 0)
 				this.bullets.splice(i, 1);
 		});
 	}
 
-	draw(ctx: CanvasRenderingContext2D) {
+	draw(ctx: CanvasRenderingContext2D, step: number) {
+		let position: Vector2 = this.previousPosition.lerp(this.transform.position, step);
+
 		ctx.drawImage(
 			this.texture,
-			this.transform.position.x,
-			this.transform.position.y,
+			position.x,
+			position.y,
 			this.transform.size.x,
 			this.transform.size.y
 		);
 
 		this.bullets.forEach(e => {
-			e.draw(ctx);
+			e.draw(ctx, step);
 		});
 	}
 }

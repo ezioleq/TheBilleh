@@ -8,12 +8,12 @@ export class GameState implements State {
 		this.player = new Player(1280 / 2 - 50, 720 / 2 - 50);
 	}
 
-	update() {
-		this.player.update();
+	update(tick: number) {
+		this.player.update(tick);
 	}
 
 	draw(ctx: CanvasRenderingContext2D, step: number) {
-		this.player.draw(ctx);
+		this.player.draw(ctx, step);
 
 		ctx.font = "30px Roboto"
 		ctx.fillText(`Speed: ${this.player.moveSpeed}\n`, 10, 230);

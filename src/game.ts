@@ -8,6 +8,13 @@ export class Game {
 	canvas: HTMLCanvasElement;
 	ctx: CanvasRenderingContext2D;
 
+	// Fixed timestep specific
+	readonly tickCount: number = 60;
+	readonly timePerTick: number = 1 / this.tickCount;
+	lastTickTime: number = new Date().getTime() / 1000;
+	lagTime: number = 0;
+	ticks: number = 0;
+
 	// Main loop arrow function hack
 	private mainLoop: any;
 
@@ -51,8 +58,17 @@ export class Game {
 	}
 
 	update() {
-		// Update current state
-		this.stateManager.currentState.update();
+		let newTickTime = new Date().getTime() / 1000;
+		let deltaTime = newTickTime - this.lastTickTime;
+		this.lastTickTime = newTickTime;
+		this.lagTime += deltaTime;
+
+		if (this.lagTime > this.timePerTick) {
+			// Update current state
+			this.stateManager.currentState.update(this.ticks);
+			this.lagTime -= this.timePerTick;
+			this.ticks++;
+		}
 	}
 
 	draw() {
@@ -62,7 +78,8 @@ export class Game {
 		this.ctx.fillStyle = "rgb(0, 0, 0)";
 
 		// Draw current state
-		this.stateManager.currentState.draw(this.ctx, 1);
+		let step = this.lagTime / this.timePerTick;
+		this.stateManager.currentState.draw(this.ctx, step);
 
 		// Request a new frame
 		window.requestAnimationFrame(this.mainLoop);

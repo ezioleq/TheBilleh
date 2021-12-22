@@ -1,4 +1,4 @@
 export interface State {
-	update(): void;
+	update(tick: number): void;
 	draw(ctx: CanvasRenderingContext2D, step: number): void;
 }
