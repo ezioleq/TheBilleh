@@ -10,10 +10,11 @@ export class GameState implements State {
 
 	update() {
 		this.player.update();
+		console.log("tick " + Math.floor(new Date().getTime()/1000));
 	}
 
 	draw(ctx: CanvasRenderingContext2D, step: number) {
-		this.player.draw(ctx);
+		this.player.draw(ctx, step);
 
 		ctx.font = "30px Roboto"
 		ctx.fillText(`Speed: ${this.player.moveSpeed}\n`, 10, 230);

@@ -89,8 +89,8 @@ export class Player {
 		this.vel.y += this.acc.y;
 		this.acc = new Vector2(0, 0);
 
-		this.transform.position.x += this.vel.x;
-		this.transform.position.y += this.vel.y;
+		// this.transform.position.x += this.vel.x;
+		// this.transform.position.y += this.vel.y;
 		this.vel.x *= 0.91;
 		this.vel.y *= 0.91;
 
@@ -101,7 +101,11 @@ export class Player {
 		});
 	}
 
-	draw(ctx: CanvasRenderingContext2D) {
+	draw(ctx: CanvasRenderingContext2D, step: number) {
+		// console.log(step);
+		this.transform.position.x += this.vel.x * step;
+		this.transform.position.y += this.vel.y * step;
+		// this.transform.position.add(this.vel.mul(new Vector2(step, step)));
 		ctx.drawImage(
 			this.texture,
 			this.transform.position.x,
@@ -111,7 +115,7 @@ export class Player {
 		);
 
 		this.bullets.forEach(e => {
-			e.draw(ctx);
+			e.draw(ctx, step);
 		});
 	}
 }

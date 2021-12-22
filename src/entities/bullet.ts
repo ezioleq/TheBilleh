@@ -36,12 +36,13 @@ export class Bullet {
 	}
 
 	update() {
-		this.transform.position.x += this.vel.x;
-		this.transform.position.y += this.vel.y;
 		this.ttl -= 0.016;
 	}
 
-	draw(ctx: CanvasRenderingContext2D) {
+	draw(ctx: CanvasRenderingContext2D, step: number) {
+		this.transform.position.x += this.vel.x * step;
+		this.transform.position.y += this.vel.y * step;
+
 		ctx.drawImage(
 			this.texture,
 			this.transform.position.x,
