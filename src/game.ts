@@ -1,10 +1,9 @@
-import { StateManager } from "./managers/stateManager";
+import { GlobalState } from "./managers/stateManager";
 import { GameState } from "./states/gameState";
 
 export class Game {
 	readonly gameWidth: number = 1280;
 	readonly gameHeight: number = 720;
-	stateManager: StateManager;
 	canvas: HTMLCanvasElement;
 	ctx: CanvasRenderingContext2D;
 
@@ -45,7 +44,7 @@ export class Game {
 		window.dispatchEvent(new Event("resize"));
 
 		// Set the initial state
-		this.stateManager = new StateManager(new GameState());
+		GlobalState.current = new GameState();
 
 		// Set our main loop
 		this.mainLoop = () => {
@@ -65,7 +64,7 @@ export class Game {
 
 		while (this.lagTime >= this.timePerTick) {
 			// Update current state
-			this.stateManager.currentState.update(this.ticks);
+			GlobalState.current.update(this.ticks);
 			this.lagTime -= this.timePerTick;
 			this.ticks++;
 		}
@@ -79,7 +78,7 @@ export class Game {
 
 		// Draw current state
 		let step = this.lagTime / this.timePerTick;
-		this.stateManager.currentState.draw(this.ctx, step);
+		GlobalState.current.draw(this.ctx, step);
 
 		// Request a new frame
 		window.requestAnimationFrame(this.mainLoop);
