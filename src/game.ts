@@ -17,7 +17,7 @@ export class Game {
 
 	constructor() {
 		this.canvas = document.getElementById("canvas") as HTMLCanvasElement;
-		this.ctx = this.canvas.getContext("2d");
+		this.ctx = this.canvas.getContext("2d", { alpha: false });
 
 		// Set the canvas size to the in-game screen size
 		this.canvas.width = Config.gameWidth;
