@@ -111,10 +111,10 @@ export class Player {
 
 		ctx.drawImage(
 			this.texture,
-			position.x,
-			position.y,
-			this.transform.size.x,
-			this.transform.size.y
+			(0.5 + position.x) | 0,
+			(0.5 + position.y) | 0,
+			(0.5 + this.transform.size.x) | 0,
+			(0.5 + this.transform.size.y) | 0
 		);
 
 		this.bullets.forEach(e => {
