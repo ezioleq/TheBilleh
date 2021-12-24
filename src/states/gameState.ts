@@ -1,11 +1,17 @@
 import { State } from "./state";
 import { Player } from "../entities/player";
+import { Config } from "../config";
+import { Vector2 } from "../math/vector";
 
 export class GameState implements State {
 	player: Player;
 
 	constructor() {
-		this.player = new Player(1280 / 2 - 50, 720 / 2 - 50);
+		this.player = new Player();
+		this.player.transform.position = new Vector2(
+			Config.gameWidth / 2 - this.player.transform.size.x / 2,
+			Config.gameHeight / 2 - this.player.transform.size.y / 2
+		);
 	}
 
 	update(tick: number) {

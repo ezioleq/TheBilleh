@@ -14,7 +14,7 @@ export class Player {
 	dir: Direction;
 	bullets: Bullet[] = [];
 
-	constructor(x: number, y: number) {
+	constructor(x: number = 0, y: number = 0) {
 		this.transform = new Transform(x, y, 100, 100);
 		this.previousPosition = new Vector2();
 		Object.assign(this.previousPosition, this.transform.position);

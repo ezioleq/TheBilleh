@@ -1,15 +1,13 @@
 import { GlobalState } from "./managers/stateManager";
 import { GameState } from "./states/gameState";
+import { Config } from "./config";
 
 export class Game {
-	readonly gameWidth: number = 1280;
-	readonly gameHeight: number = 720;
 	canvas: HTMLCanvasElement;
 	ctx: CanvasRenderingContext2D;
 
 	// Fixed timestep specific
-	readonly tickCount: number = 60;
-	readonly timePerTick: number = 1 / this.tickCount;
+	readonly timePerTick: number = 1 / Config.tps;
 	lastTickTime: number = new Date().getTime() / 1000;
 	lagTime: number = 0;
 	ticks: number = 0;
@@ -22,8 +20,8 @@ export class Game {
 		this.ctx = this.canvas.getContext("2d");
 
 		// Set the canvas size to the in-game screen size
-		this.canvas.width = this.gameWidth;
-		this.canvas.height = this.gameHeight;
+		this.canvas.width = Config.gameWidth;
+		this.canvas.height = Config.gameHeight;
 
 		// Handle window resizes
 		window.addEventListener("resize", () => {
@@ -31,7 +29,8 @@ export class Game {
 			let screenHeight = window.innerHeight;
 
 			// Where should we put the black bars?
-			let horizontal: boolean = (screenWidth / screenHeight) > (this.gameWidth / this.gameHeight);
+			let horizontal: boolean =
+				(screenWidth / screenHeight) > (Config.gameWidth / Config.gameHeight);
 
 			if (horizontal) {
 				this.canvas.style.height = "100vh";
@@ -73,7 +72,7 @@ export class Game {
 	draw() {
 		// Clear the screen
 		this.ctx.fillStyle = "rgb(255, 255, 255)";
-		this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
+		this.ctx.fillRect(0, 0, Config.gameWidth, Config.gameHeight);
 		this.ctx.fillStyle = "rgb(0, 0, 0)";
 
 		// Draw current state
