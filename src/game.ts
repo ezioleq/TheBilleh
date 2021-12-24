@@ -1,10 +1,12 @@
 import { GlobalState } from "./managers/stateManager";
 import { GameState } from "./states/gameState";
 import { Config } from "./config";
+import * as Stats from "stats.js";
 
 export class Game {
 	canvas: HTMLCanvasElement;
 	ctx: CanvasRenderingContext2D;
+	stats: Stats;
 
 	// Fixed timestep specific
 	readonly timePerTick: number = 1 / Config.tps;
@@ -18,6 +20,16 @@ export class Game {
 	constructor() {
 		this.canvas = document.getElementById("canvas") as HTMLCanvasElement;
 		this.ctx = this.canvas.getContext("2d", { alpha: false });
+
+		if (Config.isDebug) {
+			this.stats = new Stats();
+			// 0: FPS, 1: Frametime, 2: Memory
+			let panels = [0, 1, 2];
+			Array.from((this.stats.dom as HTMLDivElement).children).forEach((child, i) => {
+				(child as HTMLCanvasElement).style.display = panels.includes(i) ? "inline-block" : "none";
+			});
+			document.body.appendChild(this.stats.dom);
+		}
 
 		// Set the canvas size to the in-game screen size
 		this.canvas.width = Config.gameWidth;
@@ -47,6 +59,10 @@ export class Game {
 
 		// Set our main loop
 		this.mainLoop = () => {
+			if (Config.isDebug) {
+				this.stats.end();
+				this.stats.begin();
+			}
 			this.update();
 			this.draw();
 		}
