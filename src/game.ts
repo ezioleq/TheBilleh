@@ -1,4 +1,5 @@
 import { GlobalState } from "./managers/stateManager";
+import { Assets } from "./managers/assetManager";
 import { GameState } from "./states/gameState";
 import { Config } from "./config";
 import * as Stats from "stats.js";
@@ -54,6 +55,8 @@ export class Game {
 		});
 		window.dispatchEvent(new Event("resize"));
 
+		this.loadAssets();
+
 		// Set the initial state
 		GlobalState.current = new GameState();
 
@@ -97,5 +100,10 @@ export class Game {
 
 		// Request a new frame
 		window.requestAnimationFrame(this.mainLoop);
+	}
+
+	loadAssets() {
+		Assets.loadTexture("player", "assets/img/p.png");
+		Assets.loadTexture("bullet", "assets/img/b.png");
 	}
 }

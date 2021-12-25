@@ -1,6 +1,7 @@
 import { Vector2 } from "../math/vector";
 import { Transform } from "../components/transform";
 import { Direction } from "../components/direction";
+import { Assets } from "../managers/assetManager";
 
 export class Bullet {
 	transform: Transform;
@@ -18,8 +19,7 @@ export class Bullet {
 		this.vel = new Vector2(0, 0);
 		this.dir = dir;
 		this.speed = 10;
-		this.texture = new Image();
-		this.texture.src = "assets/img/b.png";
+		this.texture = Assets.getTexture("bullet");
 		this.ttl = 6;
 
 		switch (dir) {

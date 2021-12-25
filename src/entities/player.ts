@@ -3,6 +3,7 @@ import { Direction } from "../components/direction";
 import { Transform } from "../components/transform";
 import { Bullet } from "../entities/bullet";
 import { Input } from "../managers/inputManager";
+import { Assets } from "../managers/assetManager";
 
 export class Player {
 	transform: Transform;
@@ -20,14 +21,14 @@ export class Player {
 		Object.assign(this.previousPosition, this.transform.position);
 		this.vel = new Vector2(0, 0);
 		this.acc = new Vector2(0, 0);
-		this.texture = new Image();
-		this.texture.src = "assets/img/p.png";
+		this.texture = Assets.getTexture("player");
 		this.moveSpeed = 1;
 		this.dir = Direction.Up;
 	}
 
 	update(tick: number) {
 		let moveDir = new Vector2(0, 0);
+
 		if (Input.pressed('w')) {
 			moveDir.y = -1;
 			this.dir = Direction.Up;
