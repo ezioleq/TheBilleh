@@ -49,37 +49,14 @@ export class Player {
 			this.dir = Direction.Right;
 		}
 
-		if (Input.pressed('arrowleft')) {
-			this.bullets.push(new Bullet(
-				this.transform.position.x + this.transform.size.x / 2 - 25,
-				this.transform.position.y + this.transform.size.y / 2 - 25,
-				Direction.Left
-			));
-		}
-
-		if (Input.pressed('arrowright')) {
-			this.bullets.push(new Bullet(
-				this.transform.position.x + this.transform.size.x / 2 - 25,
-				this.transform.position.y + this.transform.size.y / 2 - 25,
-				Direction.Right
-			));
-		}
-
-		if (Input.pressed('arrowup')) {
-			this.bullets.push(new Bullet(
-				this.transform.position.x + this.transform.size.x / 2 - 25,
-				this.transform.position.y + this.transform.size.y / 2 - 25,
-				Direction.Up
-			));
-		}
-
-		if (Input.pressed('arrowdown')) {
-			this.bullets.push(new Bullet(
-				this.transform.position.x + this.transform.size.x / 2 - 25,
-				this.transform.position.y + this.transform.size.y / 2 - 25,
-				Direction.Down
-			));
-		}
+		if (Input.pressed('arrowup'))
+			this.spawnBullet(Direction.Up);
+		else if (Input.pressed('arrowdown'))
+			this.spawnBullet(Direction.Down);
+		else if (Input.pressed('arrowleft'))
+			this.spawnBullet(Direction.Left);
+		else if (Input.pressed('arrowright'))
+			this.spawnBullet(Direction.Right);
 
 		if (moveDir.magnitude() > 1) {
 			moveDir.x = moveDir.normalize().x;
@@ -105,6 +82,14 @@ export class Player {
 			if (e.ttl <= 0)
 				this.bullets.splice(i, 1);
 		});
+	}
+
+	spawnBullet(dir: Direction) {
+		this.bullets.push(new Bullet(
+			this.transform.position.x + this.transform.size.x / 2 - 25,
+			this.transform.position.y + this.transform.size.y / 2 - 25,
+			dir
+		));
 	}
 
 	draw(ctx: CanvasRenderingContext2D, step: number) {
