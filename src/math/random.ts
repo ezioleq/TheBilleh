@@ -22,4 +22,19 @@ export class Random {
 	static range(min: number, max: number) {
 		return Math.floor(Random.next() * (max - min + 1) + min);
 	}
+
+	static choose(choices: Array<any>) {
+		let index = Math.floor(Math.random() * choices.length);
+		return choices[index];
+	}
+
+	static generateUid(length: number) {
+		let set = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split('');
+		let result = "";
+
+		for (let i = 0; i < length; i++)
+			result += this.choose(set);
+
+		return result;
+	}
 }
