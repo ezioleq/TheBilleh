@@ -1,53 +1,118 @@
 import { Mathf } from "./mathf";
 
+/**
+ * Representation of two dimensional vectors and points
+ */
 export class Vector2 {
-	x: number;
-	y: number;
+	public x: number;
+	public y: number;
 
-	static readonly zero: Vector2 = new Vector2(0, 0);
-	static readonly one: Vector2 = new Vector2(1, 1);
-	static readonly up: Vector2 = new Vector2(0, 1);
-	static readonly down: Vector2 = new Vector2(0, -1);
-	static readonly right: Vector2 = new Vector2(1, 0);
-	static readonly left: Vector2 = new Vector2(-1, 0);
+	/** Shorthand for typing `new Vector(0, 0)` */
+	public static readonly zero: Vector2 = new Vector2(0, 0);
+	/** Shorthand for typing `new Vector(1, 1)` */
+	public static readonly one: Vector2 = new Vector2(1, 1);
+	/** Shorthand for typing `new Vector(0, 1)` */
+	public static readonly up: Vector2 = new Vector2(0, 1);
+	/** Shorthand for typing `new Vector(0, -1)` */
+	public static readonly down: Vector2 = new Vector2(0, -1);
+	/** Shorthand for typing `new Vector(1, 0)` */
+	public static readonly right: Vector2 = new Vector2(1, 0);
+	/** Shorthand for typing `new Vector(-1, 0)` */
+	public static readonly left: Vector2 = new Vector2(-1, 0);
 
-	constructor(x?: number, y?: number) {
-		this.x = (x != undefined) ? x : 0;
-		this.y = (y != undefined) ? y : 0;
+	/**
+	 * Constructs a new 2D vector
+	 * @param x X component
+	 * @param y Y component
+	 *
+	 * @example
+	 * ```
+	 * let v = new Vector2();     // v = [0, 0]
+	 * let v = new Vector2(1);    // v = [1, 0]
+	 * let v = new Vector2(2, 3); // v = [2, 3]
+	 * ```
+	 */
+	public constructor(x: number = 0, y: number = 0) {
+		this.x = x;
+		this.y = y;
 	}
 
-	// There is no operator overloading section
-	add(b: Vector2): Vector2 {
-		this.x += b.x;
-		this.y += b.y;
-		return this;
-	}
-
-	sub(b: Vector2): Vector2 {
-		this.x -= b.x;
-		this.y -= b.y;
-		return this;
-	}
-
-	mul(b: Vector2): Vector2 {
-		this.x *= b.x;
-		this.y *= b.y;
-		return this;
-	}
-
-	div(b: Vector2): Vector2 {
-		this.x /= b.x;
-		this.y /= b.y;
-		return this;
-	}
-
-	magnitude() {
-		return Math.sqrt(
-			Math.pow(this.x, 2) + Math.pow(this.y, 2)
+	/**
+	 * @param a First vector
+	 * @param b Second vector
+	 * @returns Addition of two vectors
+	 */
+	public static add(a: Vector2, b: Vector2): Vector2 {
+		return new Vector2(
+			a.x + b.x,
+			a.y + b.y
 		);
 	}
 
-	normalize() {
+	/**
+	 * @param a First vector
+	 * @param b Second vector
+	 * @returns Subtraction of two vectors
+	 */
+	public static sub(a: Vector2, b: Vector2): Vector2 {
+		return new Vector2(
+			a.x - b.x,
+			a.y - b.y
+		);
+	}
+
+	/**
+	 * @param a First vector
+	 * @param b Second vector
+	 * @returns Multiplication of two vectors
+	 */
+	public static mul(a: Vector2, b: Vector2): Vector2 {
+		return new Vector2(
+			a.x * b.x,
+			a.y * b.y
+		);
+	}
+
+	/**
+	 * @param a First vector
+	 * @param b Second vector
+	 * @returns Division of two vectors
+	 */
+	public static div(a: Vector2, b: Vector2): Vector2 {
+		return new Vector2(
+			a.x / b.x,
+			a.y / b.y
+		);
+	}
+
+	/**
+	 * Use of squared value is significantly faster, because the square root
+	 * calculation is a expensive operation.
+	 *
+	 * @example
+	 * ```
+	 * if (v.sqrMagnitude() > a * a) {...}
+	 * // vs slower equivalent
+	 * if (v.magnitude() > a) {...}
+	 * ```
+	 *
+	 * @returns Squared length of this vector
+	 */
+	public sqrMagnitude(): number {
+		return Math.pow(this.x, 2) + Math.pow(this.y, 2);
+	}
+
+	/**
+	 * @returns Length of this vector
+	 */
+	public magnitude(): number {
+		return Math.sqrt(this.sqrMagnitude());
+	}
+
+	/**
+	 * @returns This vector with a magnitude of 1
+	 */
+	public normalize(): Vector2 {
 		let magnitude = this.magnitude();
 		return new Vector2(
 			this.x / magnitude,
@@ -55,30 +120,35 @@ export class Vector2 {
 		);
 	}
 
-	dot(b: Vector2) {
-		return this.x * b.x + this.y * b.y;
+	/**
+	 * @param a Left-hand side vector
+	 * @param b Right-hand side vector
+	 * @returns Dot product between two given vectors
+	 */
+	public static dot(a: Vector2, b: Vector2): number {
+		return a.x * b.x + a.y * b.y;
 	}
 
-	lerp(b: Vector2, t: number) {
+	/**
+	 * Linearly interpolate this vector to vector `b` by `t`
+	 *
+	 * @example
+	 * ```
+	 * let a = new Vector2(-1, -1);
+	 * let b = new Vector2(1, 1);
+	 *
+	 * let v = Vector2.lerp(a, b, 0.5); // v = [0, 0] 
+	 * ```
+	 *
+	 * @param a Start position
+	 * @param b End position
+	 * @param t Progress between 0 and 1
+	 * @returns Interpolated position between vectors
+	 */
+	public static lerp(a: Vector2, b: Vector2, t: number): Vector2 {
 		return new Vector2(
-			Mathf.lerp(this.x, b.x, t),
-			Mathf.lerp(this.y, b.y, t)
-		);
-	}
-
-	// Untested, may explode
-	move_towards(target: Vector2, max_distance_delta: number): Vector2 {
-		let a: Vector2 = new Vector2(this.x - target.x, this.y - target.y);
-		let magnitude = a.magnitude();
-
-		if (magnitude <= max_distance_delta || magnitude === 0)
-			return target;
-
-		// Help
-		return new Vector2(this.x, this.y).add(
-			new Vector2(a.x / magnitude, a.y / magnitude)
-		).mul(
-			new Vector2(max_distance_delta, max_distance_delta)
+			Mathf.lerp(a.x, b.x, t),
+			Mathf.lerp(a.y, b.y, t)
 		);
 	}
 }
