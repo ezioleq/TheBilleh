@@ -1,22 +1,22 @@
 import seedrandom from "seedrandom";
 
-export let rand = seedrandom();
-
 export class Random {
+	private static prng = seedrandom();
+
 	static setSeed(seed: string) {
-		rand = seedrandom(seed);
+		Random.prng = seedrandom(seed);
 	}
 
 	static next() {
-		return rand();
+		return Random.prng();
 	}
 
 	static int32() {
-		return rand.int32();
+		return Random.prng.int32();
 	}
 
 	static quick() {
-		return rand.quick();
+		return Random.prng.quick();
 	}
 
 	static range(min: number, max: number) {
@@ -24,7 +24,7 @@ export class Random {
 	}
 
 	static choose(choices: Array<any>) {
-		let index = Math.floor(Math.random() * choices.length);
+		let index = Math.floor(Random.next() * choices.length);
 		return choices[index];
 	}
 
