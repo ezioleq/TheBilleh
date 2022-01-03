@@ -2,9 +2,9 @@ name: Publish game on github pages
 
 on:
   push:
-    branches: [ master, ts ]
+    branches: [ master ]
   pull_request:
-    branches: [ master, ts ]
+    branches: [ master ]
 
 jobs:
   build-and-deploy:
@@ -36,6 +36,11 @@ jobs:
           cp -r dist build/
           cp -r assets build/
           cp index.html build/
+
+      - name: Build documentation
+        run: |
+          npx typedoc
+          cp -r docs build/
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.7
