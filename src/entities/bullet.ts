@@ -46,7 +46,7 @@ export class Bullet {
 	}
 
 	draw(ctx: CanvasRenderingContext2D, step: number) {
-		let position: Vector2 = this.previousPosition.lerp(this.transform.position, step);
+		let position: Vector2 = Vector2.lerp(this.previousPosition, this.transform.position, step);
 
 		ctx.drawImage(
 			this.texture,

@@ -6,7 +6,8 @@
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "watch:prod": "webpack --watch --mode=production --node-env=production"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "stats.js": "^0.17.0",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.2.6",
+    "typedoc": "github:ramiroaisen/typedoc",
     "typescript": "^4.5.4",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1"
