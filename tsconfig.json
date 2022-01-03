@@ -5,7 +5,16 @@
     "noImplicitAny": true,
     "module": "es6",
     "target": "es5",
-    "allowJs": true
+    "allowJs": true,
   },
-  "files": ["src/main.ts"]
+  "typedocOptions": {
+    "out": "docs",
+    "entryPointStrategy": "expand",
+    "entryPoints": [
+      "./src"
+    ]
+  },
+  "files": [
+    "src/main.ts"
+  ]
 }
