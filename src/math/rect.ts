@@ -1,33 +1,71 @@
+/**
+ * Representation of an rectangle
+ */
 export class Rect {
-	x: number;
-	y: number;
-	w: number;
-	h: number;
+	public x: number;
+	public y: number;
+	public w: number;
+	public h: number;
 
-	constructor(x: number, y: number, w: number, h: number) {
+	/**
+	 * Constructs a new Rect
+	 * @param x X component
+	 * @param y Y component
+	 * @param w Width
+	 * @param h Height
+	 */
+	public constructor(x: number = 0, y: number = 0, w: number = 0, h: number = 0) {
 		this.x = x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
 	}
 
-	left(): number {
+	/**
+	 * @returns Left side of this rectangle
+	 */
+	public left(): number {
 		return this.x;
 	}
 
-	right(): number {
+	/**
+	 * @returns Right side of this rectangle
+	 */
+	public right(): number {
 		return this.x + this.w;
 	}
 
-	top(): number {
+	/**
+	 * @returns Top side of this rectangle
+	 */
+	public top(): number {
 		return this.y;
 	}
 
-	bottom(): number {
+	/**
+	 * @returns Bottom side of this rectangle
+	 */
+	public bottom(): number {
 		return this.y + this.h;
 	}
 
-	intersects(other: Rect): boolean {
+	/**
+	 * @drawing
+	 * ```
+	 * +---------+
+	 * |  a  +---|-----+
+	 * |     | i |     |
+	 * +-----|---+  b  |
+	 *       +---------+
+	 * // a - this rect
+	 * // b - other rect
+	 * // i - intersection, if it happens then this method returns true,
+	 * // if not then obviously it's false
+	 * ```
+	 * @param other Other rectangle to check
+	 * @returns True when intersecting, false when not
+	 */
+	public intersects(other: Rect): boolean {
 		return !(
 			other.left() > this.right() ||
 			other.right() < this.left() ||
