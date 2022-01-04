@@ -1,5 +1,6 @@
 import { Game } from "./game";
 
 window.addEventListener("DOMContentLoaded", () => {
-	new Game();
+	let game = new Game();
+	game.run();
 });

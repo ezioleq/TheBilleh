@@ -18,7 +18,7 @@ export class Game {
 	// Main loop arrow function hack
 	private mainLoop: any;
 
-	constructor() {
+	public run() {
 		this.canvas = document.getElementById("canvas") as HTMLCanvasElement;
 		this.ctx = this.canvas.getContext("2d", { alpha: false });
 
