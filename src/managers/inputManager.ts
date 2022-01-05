@@ -1,14 +1,14 @@
 export class InputManager {
 	private static _instance: InputManager;
-	private keys: { [k: string]: boolean } = {};
+	private keys: Map<string, boolean> = new Map();
 
 	private constructor() {
 		window.addEventListener('keydown', (e) => {
-			this.keys[e.key.toLowerCase()] = true;
+			this.keys.set(e.key.toLowerCase(), true);
 		});
 
 		window.addEventListener('keyup', (e) => {
-			this.keys[e.key.toLowerCase()] = false;
+			this.keys.set(e.key.toLowerCase(), false);
 		});
 	}
 
@@ -17,11 +17,11 @@ export class InputManager {
 	}
 
 	public pressed(key: string): boolean {
-		return this.keys[key];
+		return this.keys.get(key);
 	}
 
 	public any(): boolean {
-		return Object.values(this.keys).some((e) => e === true);
+		return Array.from(this.keys.values()).some(e => e === true);
 	}
 }
 

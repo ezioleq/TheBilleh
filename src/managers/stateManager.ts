@@ -3,7 +3,7 @@ import { State } from "../states/state";
 export class StateManager {
 	private static _instance: StateManager;
 	private _currentState: State;
-	public data: { [k: string]: unknown } = {};
+	public data: Map<string, unknown> = new Map();
 
 	constructor(state?: State) {
 		this._currentState = state;
