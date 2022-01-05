@@ -1,7 +1,7 @@
-import { State } from "./state";
+import { State } from "../mill/state/state";
 import { Player } from "../entities/player";
-import { Config } from "../config";
-import { Vector2 } from "../math/vector";
+import { Vector2 } from "../mill/math/vector";
+import { Game } from "../mill/game";
 
 export class GameState implements State {
 	player: Player;
@@ -9,8 +9,8 @@ export class GameState implements State {
 	constructor() {
 		this.player = new Player();
 		this.player.transform.position = new Vector2(
-			Config.gameWidth / 2 - this.player.transform.size.x / 2,
-			Config.gameHeight / 2 - this.player.transform.size.y / 2
+			Game.width / 2 - this.player.transform.size.x / 2,
+			Game.height / 2 - this.player.transform.size.y / 2
 		);
 	}
 

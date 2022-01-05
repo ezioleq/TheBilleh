@@ -1,4 +1,4 @@
-import { Vector2 } from "../math/vector";
+import { Vector2 } from "../mill/math";
 
 export class Transform {
 	position: Vector2;

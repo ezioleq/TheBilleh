@@ -1,28 +1,58 @@
-import { GlobalState } from "./managers/stateManager";
-import { Assets } from "./managers/assetManager";
-import { GameState } from "./states/gameState";
-import { Config } from "./config";
 import * as Stats from "stats.js";
+import { GlobalState } from "./managers/stateManager";
+import { GameState } from "../states/gameState";
+import { Assets } from "./managers/assetManager";
+import { Debug } from "./debug"
+import { Rect } from "./math";
 
 export class Game {
-	canvas: HTMLCanvasElement;
-	ctx: CanvasRenderingContext2D;
-	stats: Stats;
+	private canvas: HTMLCanvasElement;
+	public ctx: CanvasRenderingContext2D;
+	private stats: Stats;
+
+	private static _width: number = 1280;
+	private static _height: number = 720;
+	private static _tps = 60;
 
 	// Fixed timestep specific
-	readonly timePerTick: number = 1 / Config.tps;
-	lastTickTime: number = new Date().getTime() / 1000;
-	lagTime: number = 0;
-	ticks: number = 0;
+	private readonly timePerTick: number = 1 / Game.tps;
+	private lastTickTime: number = new Date().getTime() / 1000;
+	private lagTime: number = 0;
+	private static _ticks: number = 0;
 
 	// Main loop arrow function hack
 	private mainLoop: any;
+
+	// Config
+	public constructor() {
+
+	}
+
+	public static get width(): number {
+		return Game._width;
+	}
+
+	public static get height(): number {
+		return Game._height;
+	}
+
+	public static get gameRect(): Rect {
+		return new Rect(0, 0, Game.width, Game.height);
+	}
+
+	public static get tps(): number {
+		return Game._tps;
+	}
+
+	public static get elapsedTicks(): number {
+		return Game._ticks;
+	}
 
 	public run() {
 		this.canvas = document.getElementById("canvas") as HTMLCanvasElement;
 		this.ctx = this.canvas.getContext("2d", { alpha: false });
 
-		if (Config.isDebug) {
+		if (Debug.isDebug) {
 			this.stats = new Stats();
 			// 0: FPS, 1: Frametime, 2: Memory
 			let panels = [0, 1, 2];
@@ -33,8 +63,8 @@ export class Game {
 		}
 
 		// Set the canvas size to the in-game screen size
-		this.canvas.width = Config.gameWidth;
-		this.canvas.height = Config.gameHeight;
+		this.canvas.width = Game.width;
+		this.canvas.height = Game.height;
 
 		// Handle window resizes
 		window.addEventListener("resize", this.handleResize);
@@ -47,7 +77,7 @@ export class Game {
 
 		// Set our main loop
 		this.mainLoop = () => {
-			if (Config.isDebug) {
+			if (Debug.isDebug) {
 				this.stats.end();
 				this.stats.begin();
 			}
@@ -65,7 +95,7 @@ export class Game {
 
 		// Where should we put the black bars?
 		let horizontal: boolean =
-			(screenWidth / screenHeight) > (Config.gameWidth / Config.gameHeight);
+			(screenWidth / screenHeight) > (Game.width / Game.height);
 
 		if (horizontal) {
 			this.canvas.style.height = "100vh";
@@ -84,16 +114,16 @@ export class Game {
 
 		while (this.lagTime >= this.timePerTick) {
 			// Update current state
-			GlobalState.current.update(this.ticks);
+			GlobalState.current.update(Game.elapsedTicks);
 			this.lagTime -= this.timePerTick;
-			this.ticks++;
+			Game._ticks++;
 		}
 	}
 
 	private draw() {
 		// Clear the screen
 		this.ctx.fillStyle = "rgb(255, 255, 255)";
-		this.ctx.fillRect(0, 0, Config.gameWidth, Config.gameHeight);
+		this.ctx.fillRect(0, 0, Game.width, Game.height);
 		this.ctx.fillStyle = "rgb(0, 0, 0)";
 
 		// Draw current state

@@ -1,9 +1,9 @@
-import { Vector2 } from "../math/vector";
+import { Vector2 } from "../mill/math/vector";
 import { Direction } from "../components/direction";
 import { Transform } from "../components/transform";
 import { Bullet } from "../entities/bullet";
-import { Input } from "../managers/inputManager";
-import { Assets } from "../managers/assetManager";
+import { Input } from "../mill/managers/inputManager";
+import { Assets } from "../mill/managers/assetManager";
 
 export class Player {
 	transform: Transform;

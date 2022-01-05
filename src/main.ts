@@ -1,6 +1,6 @@
-import { Game } from "./game";
+import * as Mill from "./mill";
 
 window.addEventListener("DOMContentLoaded", () => {
-	let game = new Game();
+	let game = new Mill.Game();
 	game.run();
 });

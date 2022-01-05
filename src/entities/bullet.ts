@@ -1,7 +1,7 @@
-import { Vector2 } from "../math/vector";
+import { Vector2 } from "../mill/math/vector";
 import { Transform } from "../components/transform";
 import { Direction } from "../components/direction";
-import { Assets } from "../managers/assetManager";
+import { Assets } from "../mill/managers/assetManager";
 
 export class Bullet {
 	transform: Transform;
