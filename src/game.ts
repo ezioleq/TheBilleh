@@ -37,22 +37,7 @@ export class Game {
 		this.canvas.height = Config.gameHeight;
 
 		// Handle window resizes
-		window.addEventListener("resize", () => {
-			let screenWidth = window.innerWidth;
-			let screenHeight = window.innerHeight;
-
-			// Where should we put the black bars?
-			let horizontal: boolean =
-				(screenWidth / screenHeight) > (Config.gameWidth / Config.gameHeight);
-
-			if (horizontal) {
-				this.canvas.style.height = "100vh";
-				this.canvas.style.removeProperty("width");
-			} else {
-				this.canvas.style.width = "100vw";
-				this.canvas.style.removeProperty("height");
-			}
-		});
+		window.addEventListener("resize", this.handleResize);
 		window.dispatchEvent(new Event("resize"));
 
 		this.loadAssets();
@@ -74,7 +59,24 @@ export class Game {
 		window.requestAnimationFrame(this.mainLoop);
 	}
 
-	update() {
+	private handleResize() {
+		let screenWidth = window.innerWidth;
+		let screenHeight = window.innerHeight;
+
+		// Where should we put the black bars?
+		let horizontal: boolean =
+			(screenWidth / screenHeight) > (Config.gameWidth / Config.gameHeight);
+
+		if (horizontal) {
+			this.canvas.style.height = "100vh";
+			this.canvas.style.removeProperty("width");
+		} else {
+			this.canvas.style.width = "100vw";
+			this.canvas.style.removeProperty("height");
+		}
+	}
+
+	private update() {
 		let newTickTime = new Date().getTime() / 1000;
 		let deltaTime = newTickTime - this.lastTickTime;
 		this.lastTickTime = newTickTime;
@@ -88,7 +90,7 @@ export class Game {
 		}
 	}
 
-	draw() {
+	private draw() {
 		// Clear the screen
 		this.ctx.fillStyle = "rgb(255, 255, 255)";
 		this.ctx.fillRect(0, 0, Config.gameWidth, Config.gameHeight);
@@ -102,7 +104,7 @@ export class Game {
 		window.requestAnimationFrame(this.mainLoop);
 	}
 
-	loadAssets() {
+	private loadAssets() {
 		Assets.loadTexture("player", "assets/img/p.png");
 		Assets.loadTexture("bullet", "assets/img/b.png");
 	}
