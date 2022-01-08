@@ -4,6 +4,7 @@ import { Tags } from "./tags";
 import { Scene } from "../scene";
 import { Random } from "../math";
 import { Transform } from "./components/transform";
+import { MillEvents, MillEventType } from "../events";
 
 export class Entity {
 	private _id: string;
@@ -48,6 +49,7 @@ export class Entity {
 	public addComponent(component: Component): Component {
 		component.entity = this;
 		this.components.add(component);
+		MillEvents.dispatch(MillEventType.EntityComponentAdded, this);
 		return component;
 	}
 
@@ -63,6 +65,8 @@ export class Entity {
 
 	// TODO: Checking if user is trying to delete the Transform component
 	public removeComponent<T extends Component>(component: Class<T>): boolean {
-		return this.components.delete(this.getComponent(component));
+		let removed = this.components.delete(this.getComponent(component));
+		MillEvents.dispatch(MillEventType.EntityComponentRemoved, this);
+		return removed;
 	}
 }

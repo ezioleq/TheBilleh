@@ -1,17 +1,18 @@
 import { Game } from "../game"
 import { Entity } from "../entity";
 import { SpriteRenderer } from "../entity/components";
+import { MillEvents, MillEventType } from "../events";
 
 export class Scene {
 	public entities: Map<string, Entity> = new Map();
 	public name: string;
 
-	constructor() {
-
+	constructor(name: string) {
+		this.name = name;
 	}
 
 	public init(): void {
-
+		MillEvents.dispatch(MillEventType.SceneLoaded, this);
 	}
 
 	public start(): void {
@@ -51,6 +52,7 @@ export class Scene {
 	public addEntity(entity: Entity) {
 		entity.scene = this;
 		this.entities.set(entity.id, entity);
+		MillEvents.dispatch(MillEventType.EntityAdded, entity);
 	}
 
 	public createEntity(name?: string) {
@@ -59,6 +61,7 @@ export class Scene {
 
 	public destroyEntity(entity: Entity) {
 		this.entities.delete(entity.id);
+		MillEvents.dispatch(MillEventType.EntityDestroyed);
 	}
 
 	public getEntities(): Array<Entity> {
