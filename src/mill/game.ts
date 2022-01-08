@@ -130,7 +130,7 @@ export class Game {
 
 		// Draw current state
 		let step = this.lagTime / this.timePerTick;
-		SceneEngine.current.draw();
+		SceneEngine.current.draw(step);
 
 		// Request a new frame
 		window.requestAnimationFrame(this.mainLoop);

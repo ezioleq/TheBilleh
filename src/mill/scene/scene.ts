@@ -2,6 +2,7 @@ import { Game } from "../game"
 import { Entity } from "../entity";
 import { SpriteRenderer } from "../entity/components";
 import { MillEvents, MillEventType } from "../events";
+import { renderer } from "../renderer/renderer";
 
 export class Scene {
 	public entities: Map<string, Entity> = new Map();
@@ -40,18 +41,12 @@ export class Scene {
 		})
 	}
 
-	public draw(): void {
+	public draw(step: number): void {
 		// There is no EntityQuery moment
 		this.entities.forEach(e => {
 			let sr = e.getComponent(SpriteRenderer);
 			if (sr && sr.initialized) {
-				Game.ctx.drawImage(
-					sr.texture,
-					e.transform.position.x,
-					e.transform.position.y,
-					e.transform.size.x,
-					e.transform.size.y
-				);
+				renderer(e, step);
 			}
 		});
 	}
