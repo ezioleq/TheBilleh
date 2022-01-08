@@ -1,6 +1,5 @@
 import { Entity } from "../entity";
 import { Random } from "../../math";
-import { Transform } from ".";
 
 export class Component {
 	private _id: string;
@@ -15,6 +14,7 @@ export class Component {
 		return this._id;
 	}
 
-	public start(): void {};
-	public update(): void {};
+	public start(): void {}
+	public update(): void {}
+	public lateUpdate(): void {}
 }
