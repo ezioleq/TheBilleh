@@ -23,17 +23,23 @@ export class Entity {
 		this.addComponent(transform);
 	}
 
-	public start() {
+	public start(): void {
 		this.components.forEach(c => {
 			c.start();
 		});
 	};
 
-	public update() {
+	public update(): void {
 		this.components.forEach(c => {
 			c.update();
 		});
 	};
+
+	public lateUpdate(): void {
+		this.components.forEach(c => {
+			c.lateUpdate();
+		});
+	}
 
 	public get id(): string {
 		return this._id;
@@ -55,6 +61,7 @@ export class Entity {
 		return foundComponent;
 	}
 
+	// TODO: Checking if user is trying to delete the Transform component
 	public removeComponent<T extends Component>(component: Class<T>): boolean {
 		return this.components.delete(this.getComponent(component));
 	}
