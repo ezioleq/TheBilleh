@@ -7,7 +7,7 @@ import { Rect } from "./math";
 
 export class Game {
 	private canvas: HTMLCanvasElement;
-	public ctx: CanvasRenderingContext2D;
+	public static ctx: CanvasRenderingContext2D;
 	private stats: Stats;
 
 	private static _width: number = 1280;
@@ -50,7 +50,7 @@ export class Game {
 
 	public run() {
 		this.canvas = document.getElementById("canvas") as HTMLCanvasElement;
-		this.ctx = this.canvas.getContext("2d", { alpha: false });
+		Game.ctx = this.canvas.getContext("2d", { alpha: false });
 
 		if (Debug.isDebug) {
 			this.stats = new Stats();
@@ -122,13 +122,13 @@ export class Game {
 
 	private draw() {
 		// Clear the screen
-		this.ctx.fillStyle = "rgb(255, 255, 255)";
-		this.ctx.fillRect(0, 0, Game.width, Game.height);
-		this.ctx.fillStyle = "rgb(0, 0, 0)";
+		Game.ctx.fillStyle = "rgb(255, 255, 255)";
+		Game.ctx.fillRect(0, 0, Game.width, Game.height);
+		Game.ctx.fillStyle = "rgb(0, 0, 0)";
 
 		// Draw current state
 		let step = this.lagTime / this.timePerTick;
-		GlobalState.current.draw(this.ctx, step);
+		GlobalState.current.draw(Game.ctx, step);
 
 		// Request a new frame
 		window.requestAnimationFrame(this.mainLoop);
