@@ -7,6 +7,7 @@ export const physics = (entity: Entity) => {
 	rb.velocity.y += rb.acceleration.y;
 	rb.acceleration = new Vector2();
 
+	Object.assign(entity.transform.previousPosition, entity.transform.position);
 	entity.transform.position.x += rb.velocity.x;
 	entity.transform.position.y += rb.velocity.y;
 

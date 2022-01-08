@@ -11,18 +11,6 @@ export class Transform extends Component {
 	public parent: Transform = null;
 	public childs: Set<Transform> = new Set();
 
-	public override start() {
-		this.updatePreviousPosition();
-	}
-
-	public override update() {
-		this.updatePreviousPosition();
-	}
-
-	private updatePreviousPosition() {
-		Object.assign(this.previousPosition, this.position);
-	}
-
 	public translate(translation: Vector2): void {
 		this.position.x += translation.x;
 		this.position.y += translation.y;
