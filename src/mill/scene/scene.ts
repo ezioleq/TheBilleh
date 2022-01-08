@@ -5,13 +5,12 @@ import { MillEvents, MillEventType } from "../events";
 
 export class Scene {
 	public entities: Map<string, Entity> = new Map();
-	public name: string;
 
-	constructor(name: string) {
-		this.name = name;
+	constructor() {
+
 	}
 
-	public init(): void {
+	public awake(): void {
 		MillEvents.dispatch(MillEventType.SceneLoaded, this);
 	}
 
@@ -55,8 +54,10 @@ export class Scene {
 		MillEvents.dispatch(MillEventType.EntityAdded, entity);
 	}
 
-	public createEntity(name?: string) {
-		this.addEntity(new Entity(name || "Entity"));
+	public createEntity(name?: string): Entity {
+		let e = new Entity(name);
+		this.addEntity(e);
+		return e;
 	}
 
 	public destroyEntity(entity: Entity) {
