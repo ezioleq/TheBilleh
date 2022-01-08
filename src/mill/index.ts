@@ -1,4 +1,6 @@
 export * from "./debug";
+export * from "./entity";
+export * from "./entity/components";
 export * from "./events";
 export * from "./game";
 export * from "./managers";

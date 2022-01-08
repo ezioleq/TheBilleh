@@ -14,6 +14,7 @@ export class Component {
 		return this._id;
 	}
 
+	public awake(): void {}
 	public start(): void {}
 	public update(): void {}
 	public lateUpdate(): void {}

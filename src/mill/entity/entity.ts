@@ -24,22 +24,20 @@ export class Entity {
 		this.addComponent(transform);
 	}
 
+	public awake(): void {
+		this.components.forEach(c => c.awake());
+	}
+
 	public start(): void {
-		this.components.forEach(c => {
-			c.start();
-		});
+		this.components.forEach(c => c.start());
 	};
 
 	public update(): void {
-		this.components.forEach(c => {
-			c.update();
-		});
+		this.components.forEach(c => c.update());
 	};
 
 	public lateUpdate(): void {
-		this.components.forEach(c => {
-			c.lateUpdate();
-		});
+		this.components.forEach(c => c.lateUpdate());
 	}
 
 	public get id(): string {

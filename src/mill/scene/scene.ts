@@ -7,10 +7,18 @@ export class Scene {
 	public entities: Map<string, Entity> = new Map();
 
 	constructor() {
-
+		MillEvents.on(MillEventType.EntityAdded, (e: Entity) => {
+			e.awake();
+			e.start();
+		});
 	}
 
+	public init(): void {}
+
 	public awake(): void {
+		this.entities.forEach(e => {
+			e.awake();
+		});
 		MillEvents.dispatch(MillEventType.SceneLoaded, this);
 	}
 

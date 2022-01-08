@@ -13,6 +13,7 @@ export class SceneManager {
 	}
 
 	public set current(scene: Scene) {
+		scene.init();
 		this._currentScene = scene;
 		scene.awake();
 	}
