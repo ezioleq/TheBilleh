@@ -1,6 +1,6 @@
 import * as Stats from "stats.js";
-import { GlobalState } from "./managers/stateManager";
-import { GameState } from "../states/gameState";
+import { SceneEngine } from ".";
+import { MainScene } from "../scenes/mainScene";
 import { Assets } from "./managers/assetManager";
 import { Debug } from "./debug"
 import { Rect } from "./math";
@@ -73,7 +73,8 @@ export class Game {
 		this.loadAssets();
 
 		// Set the initial state
-		GlobalState.current = new GameState();
+		SceneEngine.current = new MainScene();
+		SceneEngine.current.start();
 
 		// Set our main loop
 		this.mainLoop = () => {
@@ -114,7 +115,8 @@ export class Game {
 
 		while (this.lagTime >= this.timePerTick) {
 			// Update current state
-			GlobalState.current.update(Game.elapsedTicks);
+			SceneEngine.current.update();
+			SceneEngine.current.lateUpdate();
 			this.lagTime -= this.timePerTick;
 			Game._ticks++;
 		}
@@ -128,7 +130,7 @@ export class Game {
 
 		// Draw current state
 		let step = this.lagTime / this.timePerTick;
-		GlobalState.current.draw(Game.ctx, step);
+		SceneEngine.current.draw();
 
 		// Request a new frame
 		window.requestAnimationFrame(this.mainLoop);

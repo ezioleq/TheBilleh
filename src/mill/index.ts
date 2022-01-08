@@ -3,5 +3,5 @@ export * from "./events";
 export * from "./game";
 export * from "./managers";
 export * from "./math";
-export * from "./state/state";
+export * from "./scene";
 export * from "./utils";
