@@ -1,8 +1,7 @@
-import { Game } from "../game"
 import { Entity } from "../entity";
-import { SpriteRenderer } from "../entity/components";
+import { SpriteRenderer, Rigidbody } from "../entity/components";
 import { MillEvents, MillEventType } from "../events";
-import { renderer } from "../renderer/renderer";
+import { renderer, physics } from "../systems";
 
 export class Scene {
 	public entities: Map<string, Entity> = new Map();
@@ -17,28 +16,24 @@ export class Scene {
 	public init(): void {}
 
 	public awake(): void {
-		this.entities.forEach(e => {
-			e.awake();
-		});
+		this.entities.forEach(e => e.awake());
 		MillEvents.dispatch(MillEventType.SceneLoaded, this);
 	}
 
 	public start(): void {
-		this.entities.forEach(e => {
-			e.start();
-		});
+		this.entities.forEach(e => e.start());
 	}
 
 	public update(): void {
 		this.entities.forEach(e => {
-			e.update();
-		})
+			if (e.getComponent(Rigidbody))
+				physics(e);
+		});
+		this.entities.forEach(e => e.update());
 	}
 
 	public lateUpdate(): void {
-		this.entities.forEach(e => {
-			e.lateUpdate();
-		})
+		this.entities.forEach(e => e.lateUpdate());
 	}
 
 	public draw(step: number): void {
