@@ -139,5 +139,6 @@ export class Game {
 	private loadAssets() {
 		Assets.loadTexture("player", "assets/img/p.png");
 		Assets.loadTexture("bullet", "assets/img/b.png");
+		Assets.loadTexture("brick", "assets/img/brick.png");
 	}
 }
