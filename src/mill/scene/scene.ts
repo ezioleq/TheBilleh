@@ -1,5 +1,5 @@
 import { Entity } from "../entity";
-import { SpriteRenderer, Rigidbody } from "../entity/components";
+import { SpriteRenderer, Rigidbody, Collider } from "../entity/components";
 import { MillEvents, MillEventType } from "../events";
 import { renderer, physics } from "../systems";
 
@@ -26,7 +26,7 @@ export class Scene {
 
 	public update(): void {
 		this.entities.forEach(e => {
-			if (e.getComponent(Rigidbody))
+			if (e.getComponent(Rigidbody) || e.getComponent(Collider))
 				physics(e);
 		});
 		this.entities.forEach(e => e.update());
