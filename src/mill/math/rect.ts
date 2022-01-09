@@ -1,3 +1,5 @@
+import { Vector2 } from ".";
+
 /**
  * Representation of an rectangle
  */
@@ -47,6 +49,13 @@ export class Rect {
 	 */
 	public bottom(): number {
 		return this.y + this.h;
+	}
+
+	public get halfSize(): Vector2 {
+		return new Vector2(
+			this.w / 2,
+			this.h / 2
+		);
 	}
 
 	/**
