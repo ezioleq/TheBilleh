@@ -1,14 +1,16 @@
-import { Assets, Component, Game, Input, Rigidbody, SpriteRenderer, Vector2 } from "../mill";
+import { Assets, Component, Game, Input, Rigidbody, SpriteRenderer, Vector2, Collider, Debug } from "../mill";
 
 export class Player extends Component {
 	private sr: SpriteRenderer = new SpriteRenderer();
 	private rb: Rigidbody = new Rigidbody();
+	private col: Collider = new Collider();
 
 	private speed: number = 1;
 
 	override awake() {
 		this.entity.addComponent(this.sr);
 		this.entity.addComponent(this.rb);
+		this.entity.addComponent(this.col);
 
 		this.sr.texture = Assets.getTexture("player");
 
@@ -20,6 +22,9 @@ export class Player extends Component {
 
 		this.rb.useGravity = false;
 		this.rb.friction = 0.91;
+
+		this.col.size.x = this.entity.transform.size.x;
+		this.col.size.y = this.entity.transform.size.y;
 	}
 
 	override start() {
