@@ -1,3 +1,4 @@
+import { Debug } from "..";
 import { Entity } from "../entity";
 import { SpriteRenderer, Rigidbody, Collider } from "../entity/components";
 import { MillEvents, MillEventType } from "../events";
@@ -44,6 +45,7 @@ export class Scene {
 				renderer(e, step);
 			}
 		});
+		Debug.draw();
 	}
 
 	public addEntity(entity: Entity) {
