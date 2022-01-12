@@ -11,10 +11,33 @@ abstract class DebugDrawable {
 	public abstract draw(): void;
 }
 
+class DebugLine extends DebugDrawable {
+	startPoint: Vector2;
+	endPoint: Vector2;
+
+	public constructor(startPoint: Vector2, endPoint: Vector2, color: string, lineWidth: number) {
+		super();
+		this.startPoint = startPoint;
+		this.endPoint = endPoint;
+		this.lineWidth = lineWidth;
+		this.color = color;
+	}
+
+	public override draw() {
+		Game.ctx.strokeStyle = this.color;
+		Game.ctx.lineWidth = this.lineWidth;
+
+		Game.ctx.beginPath();
+		Game.ctx.moveTo(this.startPoint.x, this.startPoint.y);
+		Game.ctx.lineTo(this.endPoint.x, this.endPoint.y);
+		Game.ctx.stroke();
+	}
+}
+
 class DebugRect extends DebugDrawable {
 	public rect: Rect;
 
-	constructor(rect: Rect, color: string, fill: boolean) {
+	public constructor(rect: Rect, color: string, fill: boolean) {
 		super();
 		this.rect = rect;
 		this.color = color;
@@ -41,6 +64,10 @@ export class DebugRenderer {
 
 	public static get Instance(): DebugRenderer {
 		return this._instance || (this._instance = new this());
+	}
+
+	public drawLine(startPoint: Vector2, endPoint: Vector2, color: string = "rgb(0, 255, 0)", lineWidth: number = 2) {
+		this.buffer.push(new DebugLine(startPoint, endPoint, color, lineWidth));
 	}
 
 	public drawRect(rect: Rect, color: string = "rgb(0, 255, 0)", fill: boolean = false) {
