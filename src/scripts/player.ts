@@ -57,9 +57,6 @@ export class Player extends Component {
 		}
 
 		this.rb.addForce(moveDir);
-		Debug.drawRect(
-			new Vector2(this.col.rect.x, this.col.rect.y),
-			this.col.size
-		);
+		Debug.drawRect(this.col.rect);
 	}
 }

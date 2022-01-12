@@ -26,28 +26,28 @@ export class Rect {
 	/**
 	 * @returns Left side of this rectangle
 	 */
-	public left(): number {
+	public get left(): number {
 		return this.x;
 	}
 
 	/**
 	 * @returns Right side of this rectangle
 	 */
-	public right(): number {
+	public get right(): number {
 		return this.x + this.w;
 	}
 
 	/**
 	 * @returns Top side of this rectangle
 	 */
-	public top(): number {
+	public get top(): number {
 		return this.y;
 	}
 
 	/**
 	 * @returns Bottom side of this rectangle
 	 */
-	public bottom(): number {
+	public get bottom(): number {
 		return this.y + this.h;
 	}
 
@@ -76,10 +76,10 @@ export class Rect {
 	 */
 	public intersects(other: Rect): boolean {
 		return !(
-			other.left() > this.right() ||
-			other.right() < this.left() ||
-			other.top() > this.bottom() ||
-			other.bottom() < this.top()
+			other.left > this.right ||
+			other.right < this.left ||
+			other.top > this.bottom ||
+			other.bottom < this.top
 		);
 	}
 }
