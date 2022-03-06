@@ -23,18 +23,19 @@ export class MainScene extends Scene {
 
 	createObstacle(position: Vector2, size: Vector2): Entity {
 		let obstacle = new Entity("Obstacle");
-		obstacle.addComponent(new Collider());
-		obstacle.addComponent(new SpriteRenderer());
 
 		obstacle.transform.position = position;
 		obstacle.transform.previousPosition = obstacle.transform.position;
 		obstacle.transform.size = size;
 
-		let sr = obstacle.getComponent(SpriteRenderer);
-		let col = obstacle.getComponent(Collider);
+		let spriteRenderer = new SpriteRenderer();
+		spriteRenderer.texture = Assets.getTexture("brick");
 
-		sr.texture = Assets.getTexture("brick");
-		Object.assign(col.size, obstacle.transform.size);
+		let collider = new Collider();
+		Object.assign(collider.size, obstacle.transform.size);
+
+		obstacle.addComponent(spriteRenderer);
+		obstacle.addComponent(collider);
 
 		return obstacle;
 	}
