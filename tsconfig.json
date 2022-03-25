@@ -11,7 +11,7 @@
     "out": "docs",
     "entryPointStrategy": "expand",
     "entryPoints": [
-      "./src"
+      "./src/mill"
     ]
   },
   "files": [

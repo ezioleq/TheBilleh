@@ -1,6 +1,6 @@
 import { MillEventType } from "./millEventType";
 
-type EventCallback<T> = (data: T) => void;
+export type EventCallback<T> = (data: T) => void;
 type EventType = MillEventType | string;
 
 export class EventSystem {
