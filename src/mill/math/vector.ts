@@ -1,29 +1,36 @@
 import { Mathf } from "./mathf";
 
 /**
- * Representation of two dimensional vectors and points
+ * Representation of two dimensional vectors and points.
  */
 export class Vector2 {
+	/**
+	 * X component.
+	 */
 	public x: number;
+
+	/**
+	 * Y component.
+	 */
 	public y: number;
 
-	/** Shorthand for typing `new Vector(0, 0)` */
+	/** Shorthand for typing `new Vector(0, 0)`. */
 	public static readonly zero: Vector2 = new Vector2(0, 0);
-	/** Shorthand for typing `new Vector(1, 1)` */
+	/** Shorthand for typing `new Vector(1, 1)`. */
 	public static readonly one: Vector2 = new Vector2(1, 1);
-	/** Shorthand for typing `new Vector(0, 1)` */
+	/** Shorthand for typing `new Vector(0, 1)`. */
 	public static readonly up: Vector2 = new Vector2(0, 1);
-	/** Shorthand for typing `new Vector(0, -1)` */
+	/** Shorthand for typing `new Vector(0, -1)`. */
 	public static readonly down: Vector2 = new Vector2(0, -1);
-	/** Shorthand for typing `new Vector(1, 0)` */
+	/** Shorthand for typing `new Vector(1, 0)`. */
 	public static readonly right: Vector2 = new Vector2(1, 0);
-	/** Shorthand for typing `new Vector(-1, 0)` */
+	/** Shorthand for typing `new Vector(-1, 0)`. */
 	public static readonly left: Vector2 = new Vector2(-1, 0);
 
 	/**
-	 * Constructs a new 2D vector
-	 * @param x X component
-	 * @param y Y component
+	 * Constructs a new 2D vector.
+	 * @param x X component.
+	 * @param y Y component.
 	 *
 	 * @example
 	 * ```
@@ -38,9 +45,9 @@ export class Vector2 {
 	}
 
 	/**
-	 * @param a First vector
-	 * @param b Second vector
-	 * @returns Addition of two vectors
+	 * @param a First vector.
+	 * @param b Second vector.
+	 * @returns Addition of two vectors.
 	 */
 	public static add(a: Vector2, b: Vector2): Vector2 {
 		return new Vector2(
@@ -50,9 +57,9 @@ export class Vector2 {
 	}
 
 	/**
-	 * @param a First vector
-	 * @param b Second vector
-	 * @returns Subtraction of two vectors
+	 * @param a First vector.
+	 * @param b Second vector.
+	 * @returns Subtraction of two vectors.
 	 */
 	public static sub(a: Vector2, b: Vector2): Vector2 {
 		return new Vector2(
@@ -62,9 +69,9 @@ export class Vector2 {
 	}
 
 	/**
-	 * @param a First vector
-	 * @param b Second vector
-	 * @returns Multiplication of two vectors
+	 * @param a First vector.
+	 * @param b Second vector.
+	 * @returns Multiplication of two vectors.
 	 */
 	public static mul(a: Vector2, b: Vector2): Vector2 {
 		return new Vector2(
@@ -74,9 +81,9 @@ export class Vector2 {
 	}
 
 	/**
-	 * @param a First vector
-	 * @param b Second vector
-	 * @returns Division of two vectors
+	 * @param a First vector.
+	 * @param b Second vector.
+	 * @returns Division of two vectors.
 	 */
 	public static div(a: Vector2, b: Vector2): Vector2 {
 		return new Vector2(
@@ -96,21 +103,21 @@ export class Vector2 {
 	 * if (v.magnitude() > a) {...}
 	 * ```
 	 *
-	 * @returns Squared length of this vector
+	 * @returns Squared length of this vector.
 	 */
 	public sqrMagnitude(): number {
 		return Math.pow(this.x, 2) + Math.pow(this.y, 2);
 	}
 
 	/**
-	 * @returns Length of this vector
+	 * @returns Length of this vector.
 	 */
 	public magnitude(): number {
 		return Math.sqrt(this.sqrMagnitude());
 	}
 
 	/**
-	 * @returns This vector with a magnitude of 1
+	 * @returns This vector with a magnitude of 1.
 	 */
 	public normalize(): Vector2 {
 		let magnitude = this.magnitude();
@@ -121,16 +128,16 @@ export class Vector2 {
 	}
 
 	/**
-	 * @param a Left-hand side vector
-	 * @param b Right-hand side vector
-	 * @returns Dot product between two given vectors
+	 * @param a Left-hand side vector.
+	 * @param b Right-hand side vector.
+	 * @returns Dot product between two given vectors.
 	 */
 	public static dot(a: Vector2, b: Vector2): number {
 		return a.x * b.x + a.y * b.y;
 	}
 
 	/**
-	 * Linearly interpolate this vector to vector `b` by `t`
+	 * Linearly interpolate this vector to vector `b` by `t`.
 	 *
 	 * @example
 	 * ```
@@ -140,10 +147,10 @@ export class Vector2 {
 	 * let v = Vector2.lerp(a, b, 0.5); // v = [0, 0] 
 	 * ```
 	 *
-	 * @param a Start position
-	 * @param b End position
-	 * @param t Progress between 0 and 1
-	 * @returns Interpolated position between vectors
+	 * @param a Start position.
+	 * @param b End position.
+	 * @param t Progress between 0 and 1.
+	 * @returns Interpolated position between vectors.
 	 */
 	public static lerp(a: Vector2, b: Vector2, t: number): Vector2 {
 		return new Vector2(
