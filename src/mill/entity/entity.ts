@@ -119,8 +119,10 @@ export class Entity {
 	 * @param component Component to remove.
 	 * @returns True if the component was removed, false if not.
 	 */
-	// TODO: Checking if user is trying to delete the Transform component
 	public removeComponent<T extends Component>(component: Class<T>): boolean {
+		if (component.name === Transform.name)
+			return false;
+
 		let removed = this.components.delete(this.getComponent(component));
 		MillEvents.dispatch(MillEventType.EntityComponentRemoved, this);
 		return removed;
