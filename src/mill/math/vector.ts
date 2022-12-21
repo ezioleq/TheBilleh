@@ -137,6 +137,15 @@ export class Vector2 {
 	}
 
 	/**
+	 * @param a First vector.
+	 * @param b Second vector.
+	 * @returns Distance between two vectors.
+	 */
+	public static distance(a: Vector2, b: Vector2): number {
+		return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+	}
+
+	/**
 	 * Linearly interpolate this vector to vector `b` by `t`.
 	 *
 	 * @example
