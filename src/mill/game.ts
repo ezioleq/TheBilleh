@@ -84,6 +84,9 @@ export class Game {
 			}
 			this.update();
 			this.draw();
+
+			// Request a new frame
+			window.requestAnimationFrame(this.mainLoop);
 		}
 
 		// Start the game loop by requesting a frame
@@ -131,9 +134,6 @@ export class Game {
 		// Draw current state
 		let step = this.lagTime / this.timePerTick;
 		SceneEngine.current.draw(step);
-
-		// Request a new frame
-		window.requestAnimationFrame(this.mainLoop);
 	}
 
 	private loadAssets() {
