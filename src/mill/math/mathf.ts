@@ -6,10 +6,10 @@ export class Mathf {
 	 * @param a Start value.
 	 * @param b End value.
 	 * @param t Progress between 0 and 1.
-	 * @returns Interpolated value, equals to `(1 - t) * a + t * b`.
+	 * @returns Interpolated value, equals to `a + t * (b - a)`.
 	 */
 	public static lerp(a: number, b: number, t: number): number {
-		return (1 - t) * a + t * b;
+		return a + t * (b - a);
 	}
 
 	/**
